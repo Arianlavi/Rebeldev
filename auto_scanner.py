@@ -35,6 +35,49 @@ import re
 
 
 # =============================================================================
+# ENTERPRISE LOGGING SYSTEM
+# =============================================================================
+
+class EnterpriseLogger:
+    """Comprehensive logging system for enterprise environments"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger('RebelDevScanner')
+        self.setup_logging()
+    
+    def setup_logging(self):
+        """Configure enterprise-grade logging"""
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s | %(levelname)-8s | %(name)-15s | %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        
+        # File handler for audit trail
+        file_handler = logging.FileHandler('scanner_audit.log')
+        file_handler.setFormatter(
+            logging.Formatter('%(asctime)s | %(levelname)-8s | %(module)-15s | %(message)s')
+        )
+        self.logger.addHandler(file_handler)
+    
+    def log_operation(self, operation: str, details: str = ""):
+        """Log business operations"""
+        self.logger.info(f"OPERATION: {operation} | {details}")
+    
+    def log_security(self, event: str, details: str = ""):
+        """Log security-related events"""
+        self.logger.warning(f"SECURITY: {event} | {details}")
+    
+    def log_performance(self, metric: str, value: Any):
+        """Log performance metrics"""
+        self.logger.info(f"PERFORMANCE: {metric} = {value}")
+    
+    def log_error(self, error: str, context: str = ""):
+        """Log error events with context"""
+        self.logger.error(f"ERROR: {error} | Context: {context}")
+
+
+# =============================================================================
 # ENHANCED CONFIGURATION MANAGEMENT
 # =============================================================================
 
@@ -549,6 +592,45 @@ class EnhancedVPNScanner:
             'trojan': f"{base_url}/{self.config.SOURCE_BRANCH}/{self.config.SOURCE_PATH}/trojan.txt"
         }
     
+    def _make_enterprise_request(self, url: str) -> Optional[str]:
+        """Make enterprise-grade HTTP request"""
+        try:
+            headers = {
+                'User-Agent': 'RebelDev-Enhanced-Scanner/4.0.0',
+                'Accept': 'text/plain, application/json',
+                'X-Request-ID': hashlib.md5(url.encode()).hexdigest()[:16]
+            }
+            
+            response = requests.get(
+                url,
+                timeout=self.config.REQUEST_TIMEOUT,
+                headers=headers,
+                allow_redirects=True
+            )
+            
+            response.raise_for_status()
+            
+            # Security validation
+            if len(response.content) > 10 * 1024 * 1024:
+                self.logger.log_security("Oversized response", f"URL: {url}")
+                return None
+                
+            self.logger.log_performance("Request successful", f"URL: {url}")
+            return response.text
+            
+        except requests.exceptions.Timeout:
+            self.logger.log_error("Request timeout", f"URL: {url}")
+            return None
+        except requests.exceptions.HTTPError as e:
+            self.logger.log_error(f"HTTP error: {e.response.status_code}", f"URL: {url}")
+            return None
+        except requests.exceptions.RequestException as e:
+            self.logger.log_error(f"Request exception: {str(e)}", f"URL: {url}")
+            return None
+        except Exception as e:
+            self.logger.log_error(f"Unexpected request error: {str(e)}", f"URL: {url}")
+            return None
+    
     async def _process_configuration_batch(self, protocol: str, raw_configs: List[str]) -> List[VPNConfig]:
         """
         Process batch of configurations with async performance testing
@@ -625,45 +707,6 @@ class EnhancedVPNScanner:
                                 f"Protocol: {protocol} - Valid: {len(validated_configs)}")
         
         return validated_configs
-    
-    def _make_enterprise_request(self, url: str) -> Optional[str]:
-        """Make enterprise-grade HTTP request"""
-        try:
-            headers = {
-                'User-Agent': 'RebelDev-Enhanced-Scanner/4.0.0',
-                'Accept': 'text/plain, application/json',
-                'X-Request-ID': hashlib.md5(url.encode()).hexdigest()[:16]
-            }
-            
-            response = requests.get(
-                url,
-                timeout=self.config.REQUEST_TIMEOUT,
-                headers=headers,
-                allow_redirects=True
-            )
-            
-            response.raise_for_status()
-            
-            # Security validation
-            if len(response.content) > 10 * 1024 * 1024:
-                self.logger.log_security("Oversized response", f"URL: {url}")
-                return None
-                
-            self.logger.log_performance("Request successful", f"URL: {url}")
-            return response.text
-            
-        except requests.exceptions.Timeout:
-            self.logger.log_error("Request timeout", f"URL: {url}")
-            return None
-        except requests.exceptions.HTTPError as e:
-            self.logger.log_error(f"HTTP error: {e.response.status_code}", f"URL: {url}")
-            return None
-        except requests.exceptions.RequestException as e:
-            self.logger.log_error(f"Request exception: {str(e)}", f"URL: {url}")
-            return None
-        except Exception as e:
-            self.logger.log_error(f"Unexpected request error: {str(e)}", f"URL: {url}")
-            return None
     
     def generate_detailed_report(self) -> Dict[str, Any]:
         """Generate comprehensive performance report"""
