@@ -1,302 +1,145 @@
-name: "🚀 RebelDev Enterprise VPN Scanner"
+# =============================================================================
+# RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
+# Description: Automated VPN configuration validation with performance testing
+# Schedule: Hourly execution for fresh configuration updates
+# Version: 3.0.0
+# =============================================================================
+
+name: "🚀 RebelDev - Enhanced Auto Config Scanner"
 
 on:
-  # Scheduled execution - Enterprise maintenance window
+  # Scheduled execution - every hour for fresh configurations
   schedule:
     - cron: '0 * * * *'  # Hourly at minute 0
   
-  # Manual trigger for emergency updates
+  # Manual trigger for on-demand execution
   workflow_dispatch:
     inputs:
-      force_full_scan:
-        description: 'Perform comprehensive security scan'
+      force_refresh:
+        description: 'Force refresh all configurations'
         required: false
         default: false
         type: boolean
   
-  # Quality gate triggers
+  # Trigger on push to main branch for testing
   push:
     branches: [ main ]
-    paths:
-      - 'auto_scanner.py'
-      - '.github/workflows/auto-scanner.yml'
 
-# Environment configuration
+# Environment variables for consistent execution
 env:
   PYTHON_VERSION: '3.9'
-  SCANNER_VERSION: '3.0.0'
-  ENVIRONMENT: 'production'
-
-# Concurrent execution control
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  SCANNER_VERSION: '4.0.0'
 
 jobs:
-  security-preflight:
-    name: "🔒 Security Pre-Flight Check"
+  enhanced-scan-and-deploy:
+    name: "🔍 Enhanced Scan & Deploy Configurations"
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      security_status: ${{ steps.security_check.outputs.status }}
-    
-    steps:
-      - name: "🛡️ Repository Security Validation"
-        id: security_check
-        run: |
-          echo "🔍 Performing security pre-flight checks..."
-          echo "✅ Basic security validation passed"
-          echo "status=secure" >> $GITHUB_OUTPUT
-      
-      - name: "📝 Security Compliance Report"
-        run: |
-          echo "🔍 SECURITY PRE-FLIGHT REPORT"
-          echo "================================"
-          echo "Repository: ${{ github.repository }}"
-          echo "Security Status: ${{ steps.security_check.outputs.security_status }}"
-          echo "Workflow: ${{ github.workflow }}"
-          echo "Trigger: ${{ github.event_name }}"
-          echo "================================"
-
-  dependency-validation:
-    name: "📦 Dependency Validation"
-    runs-on: ubuntu-latest
-    needs: security-preflight
-    timeout-minutes: 10
-    
-    steps:
-      - name: "🔄 Checkout Codebase"
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 1
-          
-      - name: "🔍 Dependency Audit"
-        run: |
-          echo "🔎 Performing dependency validation..."
-          python -c "
-          try:
-              import requests
-              import base64
-              import json
-              import socket
-              print('✅ All core dependencies are available')
-          except ImportError as e:
-              print(f'❌ Missing dependency: {e}')
-              exit(1)
-          "
-
-  enterprise-scanner:
-    name: "🔍 Enterprise Configuration Scanner"
-    runs-on: ubuntu-latest
-    needs: [security-preflight, dependency-validation]
-    timeout-minutes: 30
-    
-    # Resource optimization
-    strategy:
-      matrix:
-        python-version: ['3.9']
-    
-    # Environment-specific configurations
-    env:
-      SCANNER_CONFIG: 'enterprise'
-      PERFORMANCE_MODE: 'optimized'
-      SECURITY_LEVEL: 'high'
     
     steps:
       # =======================================================================
-      # PHASE 1: ENVIRONMENT SETUP
+      # SETUP PHASE - Enhanced environment preparation
       # =======================================================================
-      - name: "🏗️ Infrastructure Initialization"
-        id: init
-        run: |
-          echo "🚀 INITIALIZING ENTERPRISE SCANNER INFRASTRUCTURE"
-          echo "=================================================="
-          echo "Scanner Version: ${{ env.SCANNER_VERSION }}"
-          echo "Python Version: ${{ matrix.python-version }}"
-          echo "Environment: ${{ env.ENVIRONMENT }}"
-          echo "Execution ID: ${{ github.run_id }}"
-          echo "Trigger: ${{ github.event_name }}"
-          echo "=================================================="
-          
-          # Set execution metadata
-          echo "start_time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
-          echo "scanner_mode=${{ env.SCANNER_CONFIG }}" >> $GITHUB_OUTPUT
-          
-      - name: "🔄 Checkout Enterprise Codebase"
+      - name: "🔄 Checkout Repository"
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
           
-      - name: "🐍 Setup Python Ecosystem"
+      - name: "🐍 Setup Python Environment"
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-          cache-dependency-path: '**/requirements.txt'
           
-      - name: "📦 Install Enterprise Dependencies"
+      - name: "📦 Install Enhanced Dependencies"
         run: |
-          echo "📥 Installing enterprise-grade dependencies..."
           python -m pip install --upgrade pip
-          
-          # Install core dependencies
-          pip install requests
-          
-          echo "✅ Dependencies installed and validated"
+          pip install requests aiohttp
+          echo "✅ Enhanced dependencies installed successfully"
           
       # =======================================================================
-      # PHASE 2: SCANNER EXECUTION
+      # EXECUTION PHASE - Run enhanced scanner with performance testing
       # =======================================================================
-      - name: "🔧 Pre-Scanner Configuration"
+      - name: "🚀 Execute Enhanced Auto Scanner"
         run: |
-          echo "⚙️ Configuring enterprise scanner environment..."
-          export SCANNER_MODE="${{ env.SCANNER_CONFIG }}"
-          export PERFORMANCE_LEVEL="${{ env.PERFORMANCE_MODE }}"
-          
-          # Create scanner workspace
-          mkdir -p scanner-workspace
-          mkdir -p audit-logs
-          
-          echo "✅ Environment configured for $SCANNER_MODE mode"
-          
-      - name: "🚀 Execute Enterprise Scanner"
-        id: scanner_execution
-        run: |
-          echo "🎯 STARTING ENTERPRISE VPN CONFIGURATION SCAN"
-          echo "=============================================="
-          
-          # Execute scanner with enterprise parameters
+          echo "Starting enhanced VPN configuration scan with performance testing..."
           python auto_scanner.py
-          SCANNER_EXIT_CODE=$?
-          
-          # Capture execution metrics
-          echo "exit_code=$SCANNER_EXIT_CODE" >> $GITHUB_OUTPUT
-          echo "completion_time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
-          
-          if [ $SCANNER_EXIT_CODE -eq 0 ]; then
-            echo "✅ Scanner execution completed successfully"
-          elif [ $SCANNER_EXIT_CODE -eq 1 ]; then
-            echo "⚠️ Scanner completed with warnings (no valid configurations)"
-          else
-            echo "❌ Scanner execution failed with code: $SCANNER_EXIT_CODE"
-            exit $SCANNER_EXIT_CODE
-          fi
+          echo "✅ Enhanced scanner execution completed"
           
       # =======================================================================
-      # PHASE 3: OUTPUT VALIDATION
+      # VALIDATION PHASE - Verify output quality
       # =======================================================================
-      - name: "📊 Output Quality Assessment"
-        id: quality_gate
+      - name: "✅ Validate Output Configurations"
         run: |
-          echo "🔍 PERFORMING OUTPUT QUALITY VALIDATION"
-          echo "========================================"
-          
-          # Validate output directory structure
-          if [ ! -d "RebelLink" ]; then
-            echo "❌ Output directory 'RebelLink' not found"
+          echo "Validating generated configurations..."
+          if [ -d "RebelLink" ]; then
+            echo "📁 RebelLink directory found"
+            config_count=$(find RebelLink -name "*.txt" -type f | wc -l)
+            echo "📊 Found $config_count configuration files"
+            
+            # Check if performance report exists
+            if [ -f "RebelLink/performance_report.json" ]; then
+              echo "📈 Performance report generated successfully"
+              # Display summary from performance report
+              python -c "
+              import json
+              try:
+                  with open('RebelLink/performance_report.json', 'r') as f:
+                      report = json.load(f)
+                  print(f'✅ Scan completed at: {report[\"scan_timestamp\"]}')
+                  print(f'📋 Total processed: {report[\"performance_metrics\"][\"total_configurations_processed\"]}')
+                  print(f'✅ Valid configs: {report[\"performance_metrics\"][\"valid_configurations_found\"]}')
+                  print(f'📊 Success rate: {report[\"performance_metrics\"][\"success_rate\"]}%')
+                  print(f'⚡ Average latency: {report[\"performance_metrics\"][\"average_latency_ms\"]}ms')
+              except Exception as e:
+                  print(f'❌ Error reading performance report: {e}')
+              "
+            else
+              echo "❌ Performance report not found"
+              exit 1
+            fi
+          else
+            echo "❌ RebelLink directory not found"
             exit 1
           fi
           
-          # Check for generated configuration files
-          CONFIG_FILES=$(find RebelLink -name "*.txt" -type f | wc -l)
-          echo "config_files_count=$CONFIG_FILES" >> $GITHUB_OUTPUT
-          
-          if [ $CONFIG_FILES -eq 0 ]; then
-            echo "⚠️ No configuration files generated"
-            echo "quality_status=warning" >> $GITHUB_OUTPUT
-          else
-            echo "✅ Generated $CONFIG_FILES configuration files"
-            echo "quality_status=success" >> $GITHUB_OUTPUT
-            
-            # Validate file contents
-          for file in RebelLink/*.txt; do
-            if [ -f "$file" ]; then
-              LINE_COUNT=$(wc -l < "$file")
-              echo "📄 $file: $LINE_COUNT lines"
-            fi
-          done
-          fi
-          
       # =======================================================================
-      # PHASE 4: ARTIFACT MANAGEMENT
+      # DEPLOYMENT PHASE - Commit and push enhanced changes
       # =======================================================================
-      - name: "📦 Archive Scanner Artifacts"
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: scanner-artifacts-${{ github.run_id }}
-          path: |
-            RebelLink/
-            scanner_audit.log
-          retention-days: 7
-          
-      - name: "📝 Generate Execution Report"
-        if: always()
+      - name: "🔄 Deploy Enhanced Configurations"
         run: |
-          echo "📈 ENTERPRISE SCANNER EXECUTION REPORT"
-          echo "======================================"
-          echo "Execution ID: ${{ github.run_id }}"
-          echo "Start Time: ${{ steps.init.outputs.start_time }}"
-          echo "End Time: ${{ steps.scanner_execution.outputs.completion_time }}"
-          echo "Exit Code: ${{ steps.scanner_execution.outputs.exit_code }}"
-          echo "Config Files: ${{ steps.quality_gate.outputs.config_files_count }}"
-          echo "Quality Status: ${{ steps.quality_gate.outputs.quality_status }}"
-          echo "Python Version: ${{ matrix.python-version }}"
-          echo "Trigger: ${{ github.event_name }}"
-          echo "======================================"
-          
-      # =======================================================================
-      # PHASE 5: REPOSITORY INTEGRATION
-      # =======================================================================
-      - name: "🔄 Repository Synchronization"
-        if: steps.scanner_execution.outputs.exit_code == 0 && steps.quality_gate.outputs.quality_status == 'success'
-        run: |
-          echo "🔄 SYNCHRONIZING WITH REPOSITORY"
-          echo "================================"
-          
-          # Configure git for enterprise operations
+          # Configure git identity for commits
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "RebelDev Enhanced Scanner"
           
-          # Check for changes
-          git add RebelLink/ || echo "No changes to add"
-          
-          if ! git diff --staged --quiet; then
-            echo "📥 Changes detected in RebelLink directory"
-            
-            # Create enterprise-grade commit message
-            git commit -m "🤖 Auto-Update: VPN Configurations $(date -u)" \
-                      -m "Automated configuration refresh via Enterprise Scanner" \
-                      -m "• Scanner Version: ${{ env.SCANNER_VERSION }}" \
-                      -m "• Execution ID: ${{ github.run_id }}" \
-                      -m "• Config Files: ${{ steps.quality_gate.outputs.config_files_count }}"
-            
-            # Push changes
-            git push
-            echo "✅ Repository synchronized successfully"
+          # Check for changes in RebelLink directory
+          if git diff --quiet HEAD -- RebelLink/; then
+            echo "🟡 No configuration changes detected"
           else
-            echo "🟡 No changes to synchronize"
+            # Stage all changes in RebelLink directory
+            git add RebelLink/
+            
+            # Create enhanced commit with detailed message
+            timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "🤖 Enhanced Auto-Update: VPN Configurations ${timestamp}" \
+                      -m "Automated configuration refresh with performance testing" \
+                      -m "Scanner Version: ${{ env.SCANNER_VERSION }}" \
+                      -m "Features: Base64 decoding, Ping testing, Relay delay analysis" \
+                      -m "Performance metrics: Latency, Jitter, Packet loss, Quality score"
+            
+            # Push changes to repository
+            git push
+            echo "✅ Enhanced configuration updates deployed successfully"
           fi
-
-  notification:
-    name: "📢 Notification Engine"
-    runs-on: ubuntu-latest
-    needs: enterprise-scanner
-    timeout-minutes: 2
-    if: always()
-    
-    steps:
-      - name: "📨 Workflow Status Notification"
+          
+      # =======================================================================
+      # NOTIFICATION PHASE - Enhanced status reporting
+      # =======================================================================
+      - name: "📊 Enhanced Scan Completion Notice"
+        if: always()
         run: |
-          echo "🔔 WORKFLOW EXECUTION COMPLETE"
-          echo "==============================="
-          echo "Workflow: ${{ github.workflow }}"
-          echo "Execution ID: ${{ github.run_id }}"
-          echo "Final Status: ${{ job.status }}"
-          echo "Scanner Result: ${{ needs.enterprise-scanner.result }}"
-          echo "Trigger: ${{ github.event_name }}"
-          echo "Timestamp: $(date -u)"
-          echo "Repository: ${{ github.repository }}"
-          echo "==============================="
+          echo "RebelDev Enhanced Auto Scanner execution completed"
+          echo "View enhanced configurations in: ./RebelLink/"
+          echo "Performance report: ./RebelLink/performance_report.json"
+          echo "Features: Base64 decoding, Ping testing, Quality scoring"
+          echo "Next scheduled run: 1 hour from now"
