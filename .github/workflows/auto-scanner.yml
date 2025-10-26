@@ -1,5 +1,5 @@
 # =============================================================================
-# RebelDev Auto Scanner - GitHub Actions Workflow
+# RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
 # Description: Automated VPN configuration validation with performance testing
 # Schedule: Hourly execution for fresh configuration updates
 # Version: 1.0.0
@@ -131,11 +131,12 @@ EOF
             echo "🟡 No configuration changes detected - Skipping commit"
           else
             git add RebelLink/
+            valid_count=$(python -c "import json; d=json.load(open('RebelLink/performance_report.json')); print(d['performance_metrics']['valid_configs'])")
             timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
             git commit -m "🤖 Improved Auto-Update: VPN Configurations ${timestamp}" \
                       -m "Enhanced scanner v${{ env.SCANNER_VERSION }} with base64 subscriptions & relay tests" \
                       -m "Features: Async fetch, Real VPN relay (curl), Cache retention (7 days), User-ready links" \
-                      -m "Success: $(python -c 'import json; d=json.load(open(\"RebelLink/performance_report.json\")); print(d[\"performance_metrics\"][\"valid_configs\"])') valid configs"
+                      -m "Success: ${valid_count} valid configs"
             git push
             echo "✅ Configuration updates deployed to main branch"
           fi
