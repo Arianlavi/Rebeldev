@@ -5,14 +5,11 @@
 # Version: 3.0.0
 # =============================================================================
 
-name: "🚀 RebelDev - Enhanced Auto Config Scanner"
+name: "🚀 RebelDev - Improved Auto Config Scanner"
 
 on:
-  # Scheduled execution - every hour for fresh configurations
   schedule:
-    - cron: '0 * * * *'  # Hourly at minute 0
-  
-  # Manual trigger for on-demand execution
+    - cron: '0 * * * *'
   workflow_dispatch:
     inputs:
       force_refresh:
@@ -20,25 +17,22 @@ on:
         required: false
         default: false
         type: boolean
-  
-  # Trigger on push to main branch for testing
   push:
     branches: [ main ]
 
-# Environment variables for consistent execution
 env:
   PYTHON_VERSION: '3.9'
-  SCANNER_VERSION: '4.0.0'
+  SCANNER_VERSION: '4.1.0'
 
 jobs:
-  enhanced-scan-and-deploy:
-    name: "🔍 Enhanced Scan & Deploy Configurations"
+  improved-scan-and-deploy:
+    name: "🔍 Improved Scan & Deploy"
     runs-on: ubuntu-latest
     
+    # Add timeout to prevent hanging
+    timeout-minutes: 30
+    
     steps:
-      # =======================================================================
-      # SETUP PHASE - Enhanced environment preparation
-      # =======================================================================
       - name: "🔄 Checkout Repository"
         uses: actions/checkout@v4
         with:
@@ -51,25 +45,26 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
           
-      - name: "📦 Install Enhanced Dependencies"
+      - name: "📦 Install Dependencies"
         run: |
           python -m pip install --upgrade pip
-          pip install requests aiohttp
-          echo "✅ Enhanced dependencies installed successfully"
+          pip install requests
+          echo "✅ Dependencies installed"
           
-      # =======================================================================
-      # EXECUTION PHASE - Run enhanced scanner with performance testing
-      # =======================================================================
-      - name: "🚀 Execute Enhanced Auto Scanner"
+      - name: "🔧 Setup System Permissions"
         run: |
-          echo "Starting enhanced VPN configuration scan with performance testing..."
-          python auto_scanner.py
-          echo "✅ Enhanced scanner execution completed"
+          # Enable ping without root (if possible)
+          sudo sysctl -w net.ipv4.ping_group_range="0 2147483647" || true
+          echo "✅ System permissions configured"
           
-      # =======================================================================
-      # VALIDATION PHASE - Verify output quality
-      # =======================================================================
-      - name: "✅ Validate Output Configurations"
+      - name: "🚀 Execute Improved Scanner"
+        run: |
+          echo "Starting improved VPN configuration scan..."
+          echo "This may take several minutes..."
+          timeout 25m python auto_scanner.py
+          echo "✅ Scanner execution completed"
+          
+      - name: "✅ Validate Output"
         run: |
           echo "Validating generated configurations..."
           if [ -d "RebelLink" ]; then
@@ -77,69 +72,43 @@ jobs:
             config_count=$(find RebelLink -name "*.txt" -type f | wc -l)
             echo "📊 Found $config_count configuration files"
             
-            # Check if performance report exists
             if [ -f "RebelLink/performance_report.json" ]; then
-              echo "📈 Performance report generated successfully"
-              # Display summary from performance report
+              echo "📈 Performance report generated"
               python -c "
               import json
               try:
                   with open('RebelLink/performance_report.json', 'r') as f:
                       report = json.load(f)
-                  print(f'✅ Scan completed at: {report[\"scan_timestamp\"]}')
-                  print(f'📋 Total processed: {report[\"performance_metrics\"][\"total_configurations_processed\"]}')
-                  print(f'✅ Valid configs: {report[\"performance_metrics\"][\"valid_configurations_found\"]}')
-                  print(f'📊 Success rate: {report[\"performance_metrics\"][\"success_rate\"]}%')
-                  print(f'⚡ Average latency: {report[\"performance_metrics\"][\"average_latency_ms\"]}ms')
+                  print(f'✅ Scan completed: {report[\"scan_timestamp\"]}')
+                  print(f'📋 Processed: {report[\"performance_metrics\"][\"total_configurations_processed\"]}')
+                  print(f'✅ Valid: {report[\"performance_metrics\"][\"valid_configurations_found\']}')
+                  print(f'📊 Success: {report[\"performance_metrics\"][\"success_rate\"]}%')
+                  print(f'⚡ Avg Latency: {report[\"performance_metrics\"][\"average_latency_ms\"]}ms')
               except Exception as e:
-                  print(f'❌ Error reading performance report: {e}')
+                  print(f'⚠️ Report read error: {e}')
               "
             else
-              echo "❌ Performance report not found"
-              exit 1
+              echo "⚠️ Performance report not found"
             fi
           else
             echo "❌ RebelLink directory not found"
             exit 1
           fi
           
-      # =======================================================================
-      # DEPLOYMENT PHASE - Commit and push enhanced changes
-      # =======================================================================
-      - name: "🔄 Deploy Enhanced Configurations"
+      - name: "🔄 Deploy Configurations"
         run: |
-          # Configure git identity for commits
           git config --local user.email "action@github.com"
-          git config --local user.name "RebelDev Enhanced Scanner"
+          git config --local user.name "RebelDev Improved Scanner"
           
-          # Check for changes in RebelLink directory
           if git diff --quiet HEAD -- RebelLink/; then
             echo "🟡 No configuration changes detected"
           else
-            # Stage all changes in RebelLink directory
             git add RebelLink/
-            
-            # Create enhanced commit with detailed message
             timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-            git commit -m "🤖 Enhanced Auto-Update: VPN Configurations ${timestamp}" \
-                      -m "Automated configuration refresh with performance testing" \
+            git commit -m "🤖 Improved Auto-Update: VPN Configurations ${timestamp}" \
+                      -m "Enhanced scanner with better ping handling" \
                       -m "Scanner Version: ${{ env.SCANNER_VERSION }}" \
-                      -m "Features: Base64 decoding, Ping testing, Relay delay analysis" \
-                      -m "Performance metrics: Latency, Jitter, Packet loss, Quality score"
-            
-            # Push changes to repository
+                      -m "Features: TCP fallback, Improved timeout handling"
             git push
-            echo "✅ Enhanced configuration updates deployed successfully"
+            echo "✅ Configuration updates deployed"
           fi
-          
-      # =======================================================================
-      # NOTIFICATION PHASE - Enhanced status reporting
-      # =======================================================================
-      - name: "📊 Enhanced Scan Completion Notice"
-        if: always()
-        run: |
-          echo "RebelDev Enhanced Auto Scanner execution completed"
-          echo "View enhanced configurations in: ./RebelLink/"
-          echo "Performance report: ./RebelLink/performance_report.json"
-          echo "Features: Base64 decoding, Ping testing, Quality scoring"
-          echo "Next scheduled run: 1 hour from now"
