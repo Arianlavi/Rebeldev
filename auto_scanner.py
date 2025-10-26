@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 """
-RebelDev Enterprise VPN Configuration Scanner - Robust Parsing & Timeout Fixes
+RebelDev Enterprise VPN Configuration Scanner - Single Subscription File
 ============================================
 
-Fixed from logs:
-- Auto base64 decode lines in fetch: Handles b64(URI) or b64(JSON) formats.
-- VMESS: Extract valid JSON with regex if malformed/extra data.
-- VLESS/SS/Trojan: Parse after decode, handle quoted params.
-- Ping: Increased timeout to 15s, subprocess 30s buffer; optional (fallback to TCP).
-- Skip invalid lines early (dashes, short).
-- Logger: Less verbose errors for batch.
+Updated to:
+- Fetch single All_Configs_Sub.txt
+- Group lines by protocol prefix (vmess://, vless://, ss://, trojan://)
+- Parse/decode/test per group
+- Skip non-config lines (dashes, comments)
 
-Author: Arian Lavi 
+Author: Arian Lavi (Enhanced by Senior Dev)
 Version: 4.1.0
 License: Proprietary - RebelDev Internal Use
 """
@@ -29,7 +27,7 @@ import subprocess
 from urllib.parse import urlparse, unquote, parse_qs
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import hashlib
 import re
 from pathlib import Path
@@ -45,16 +43,16 @@ class ScannerConfig:
     """Configuration with defaults"""
     SOURCE_REPOSITORY: str = "Epodonios/v2ray-configs"
     SOURCE_BRANCH: str = "main"
-    SOURCE_PATH: str = "Splitted-By-Protocol"
+    SOURCE_PATH: str = "All_Configs_Sub.txt"  # Single file
     
-    MAX_LATENCY_MS: int = 2500  # More lenient
+    MAX_LATENCY_MS: int = 2500
     MAX_JITTER_MS: int = 300
     PACKET_LOSS_THRESHOLD: float = 0.2
     CONNECTION_TIMEOUT: int = 12
     REQUEST_TIMEOUT: int = 30
     MAX_WORKERS: int = 10
     PING_COUNT: int = 3
-    PING_TIMEOUT: int = 15  # Increased
+    PING_TIMEOUT: int = 15
     
     OUTPUT_DIRECTORY: str = "RebelLink"
     CONFIG_RETENTION_DAYS: int = 7
@@ -69,9 +67,13 @@ class ScannerConfig:
             }
         os.makedirs(self.OUTPUT_DIRECTORY, exist_ok=True)
 
+    @property
+    def source_url(self) -> str:
+        return f"https://raw.githubusercontent.com/{self.SOURCE_REPOSITORY}/{self.SOURCE_BRANCH}/{self.SOURCE_PATH}"
+
 
 # =============================================================================
-# VPN CONFIG CLASS
+# VPN CONFIG CLASS (Unchanged)
 # =============================================================================
 
 @dataclass
@@ -101,19 +103,18 @@ class VPNConfig:
     def calculate_performance_score(self):
         score = 100.0
         if self.latency:
-            score -= min(self.latency / 100.0, 50.0)  # Cap penalty
+            score -= min(self.latency / 100.0, 50.0)
         if self.jitter:
             score -= min(self.jitter / 50.0, 20.0)
         if self.packet_loss:
             score -= min(self.packet_loss * 50.0, 30.0)
         if not self.relay_success:
-            score -= 20.0  # Less penalty
+            score -= 20.0
         self.performance_score = max(0.0, min(100.0, score))
     
     def to_subscription_link(self) -> str:
         if not self.host:
             return self.raw_config
-        
         try:
             if self.protocol == 'vmess':
                 vmess_dict = {
@@ -136,7 +137,7 @@ class VPNConfig:
 
 
 # =============================================================================
-# LOGGER
+# LOGGER (Unchanged)
 # =============================================================================
 
 class EnterpriseLogger:
@@ -160,7 +161,7 @@ class EnterpriseLogger:
 
 
 # =============================================================================
-# PARSER (Robust with Auto-Decode)
+# PARSER (Unchanged, handles subscription links)
 # =============================================================================
 
 class ConfigurationParser:
@@ -169,7 +170,7 @@ class ConfigurationParser:
         self.default_ports = {'ss': 8388, 'trojan': 443, 'vless': 443, 'vmess': 443}
     
     def parse_configuration(self, protocol: str, raw_config: str) -> Optional[VPNConfig]:
-        if len(raw_config) < 20:  # Skip short/invalid
+        if len(raw_config) < 20:
             return None
         
         decoded = self._try_decode(raw_config)
@@ -202,28 +203,23 @@ class ConfigurationParser:
         return None
     
     def _try_decode(self, raw: str) -> str:
-        """Try base64 decode"""
         try:
-            # Base64 decode
             decoded_bytes = base64.b64decode(raw + '==' * ((4 - len(raw) % 4) % 4), validate=False)
             return decoded_bytes.decode('utf-8', errors='ignore').strip()
         except:
             return raw.strip()
     
     def _parse_vmess(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        """VMESS: Handle b64(JSON) or vmess://b64(JSON)"""
         if decoded.startswith('vmess://'):
             decoded = decoded[8:]
-            decoded = self._try_decode(decoded)  # Nested b64?
+            decoded = self._try_decode(decoded)
         
-        # Try direct JSON
         try:
             config_json = json.loads(decoded)
             return config_json.get('add') or config_json.get('server', ''), int(config_json.get('port', 443)), config_json.get('ps', 'VMESS')
         except json.JSONDecodeError:
             pass
         
-        # Regex extract first valid JSON
         json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', decoded, re.DOTALL)
         if json_match:
             try:
@@ -235,7 +231,6 @@ class ConfigurationParser:
         return None, None, 'VMESS'
     
     def _parse_vless(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        """VLESS: vless://uuid@host:port?params#remark"""
         if not decoded.startswith('vless://'):
             return None, None, 'VLESS'
         
@@ -258,7 +253,6 @@ class ConfigurationParser:
         return host, port, name
     
     def _parse_ss(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        """SS: ss://b64(method:pass@host:port)#name"""
         if not decoded.startswith('ss://'):
             return None, None, 'SS'
         
@@ -274,7 +268,6 @@ class ConfigurationParser:
                     host = host_port
                     port = 8388
             else:
-                # Fallback parse
                 host_port_match = re.search(r'([^\s:]+)(?::(\d+))?', decoded_inner)
                 if host_port_match:
                     host = host_port_match.group(1)
@@ -289,12 +282,10 @@ class ConfigurationParser:
             return None, None, 'SS'
     
     def _parse_trojan(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        """TROJAN: trojan://pass@host:port?params#remark"""
         if not decoded.startswith('trojan://'):
             return None, None, 'TROJAN'
         
         uri = decoded[9:]
-        # Find last @ for password
         last_at = uri.rfind('@')
         if last_at == -1:
             return None, None, 'TROJAN'
@@ -302,7 +293,6 @@ class ConfigurationParser:
         pass_part = uri[:last_at]
         host_port_part = uri[last_at + 1:]
         
-        # Split host:port from ?params
         if '?' in host_port_part:
             host_port, params = host_port_part.split('?', 1)
         else:
@@ -316,14 +306,13 @@ class ConfigurationParser:
             host = host_port
             port = 443
         
-        # Name from # or query
         name_match = re.search(r'#(.+)$', decoded)
         name = unquote(name_match.group(1)) if name_match else parse_qs(params).get('remark', ['TROJAN'])[0]
         return host, port, name
 
 
 # =============================================================================
-# TESTER (Ping Robust)
+# TESTER (Unchanged)
 # =============================================================================
 
 class ImprovedPerformanceTester:
@@ -384,8 +373,7 @@ class ImprovedPerformanceTester:
             return False, None
     
     async def test_relay_connection(self, config: VPNConfig) -> bool:
-        # Fallback to TCP for CI
-        config.relay_success = True  # Assume if TCP ok
+        config.relay_success = True
         return True
     
     async def comprehensive_performance_test(self, config: VPNConfig) -> VPNConfig:
@@ -399,7 +387,7 @@ class ImprovedPerformanceTester:
             self.logger.log_performance("Perf fail", f"No TCP - {config.host}:{config.port}")
             return config
         
-        config.latency = tcp_lat or 999  # High if no lat
+        config.latency = tcp_lat or 999
         ping_lat, jitter, loss = await self.test_ping_performance(config.host)
         if ping_lat:
             config.latency = ping_lat
@@ -420,7 +408,7 @@ class ImprovedPerformanceTester:
 
 
 # =============================================================================
-# SCANNER
+# SCANNER (Updated for Single File)
 # =============================================================================
 
 class ImprovedVPNScanner:
@@ -429,14 +417,9 @@ class ImprovedVPNScanner:
         self.logger = EnterpriseLogger()
         self.parser = ConfigurationParser()
         self.tester = ImprovedPerformanceTester(config, self.logger)
-        self.sources = self._initialize_sources()
         self.unique_configs = self._load_cache()
         self.validated_configs: Dict[str, List[VPNConfig]] = {}
         self.performance_stats = {'start_time': datetime.utcnow(), 'total_processed': 0, 'valid_configs': 0, 'failed_tests': 0, 'duplicates_found': 0}
-    
-    def _initialize_sources(self) -> Dict[str, str]:
-        base = f"https://raw.githubusercontent.com/{self.config.SOURCE_REPOSITORY}/{self.config.SOURCE_BRANCH}/{self.config.SOURCE_PATH}"
-        return {p: f"{base}/{p}.txt" for p in ['vless', 'vmess', 'ss', 'trojan']}
     
     def _load_cache(self) -> set:
         cache_path = Path(self.config.OUTPUT_DIRECTORY) / self.config.CACHE_FILE
@@ -459,40 +442,46 @@ class ImprovedVPNScanner:
         with open(cache_path, 'w', encoding='utf-8') as f:
             json.dump(cache, f)
     
-    async def _fetch_raw_configs(self, url: str) -> List[str]:
+    async def _fetch_all_configs(self) -> Dict[str, List[str]]:
+        """Fetch single file and group by protocol"""
+        url = self.config.source_url
         connector = aiohttp.TCPConnector(limit=10, limit_per_host=5)
         timeout = aiohttp.ClientTimeout(total=self.config.REQUEST_TIMEOUT)
+        groups: Dict[str, List[str]] = {'vmess': [], 'vless': [], 'ss': [], 'trojan': []}
+        
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             try:
-                async with session.get(url, headers={'User-Agent': 'RebelDev-Scanner/4.4.0'}) as resp:
+                async with session.get(url, headers={'User-Agent': 'RebelDev-Scanner/4.5.0'}) as resp:
                     if resp.status == 200:
                         content = await resp.text(encoding='utf-8', errors='ignore')
-                        raw_lines = []
-                        for line in content.splitlines():
-                            line = line.strip()
-                            if line and len(line) > 10 and not line.startswith(('#', '//', '-')):
-                                raw_lines.append(line)
-                        # Auto-decode where possible
-                        decoded_lines = []
-                        for raw in raw_lines:
-                            try:
-                                # Pad for base64
-                                padded = raw + '==' * ((4 - len(raw) % 4) % 4)
-                                decoded_bytes = base64.b64decode(padded, validate=False)
-                                decoded = decoded_bytes.decode('utf-8', errors='ignore').strip()
-                                if decoded and len(decoded) > 10:  # Valid decode
-                                    decoded_lines.append(decoded)
-                                    continue
-                            except:
-                                pass
-                            decoded_lines.append(raw)  # Fallback
+                        lines = content.splitlines()
+                        total_lines = len(lines)
+                        self.logger.log_performance("File fetched", f"{url}: {total_lines} total lines")
                         
-                        count = len(decoded_lines)
-                        self.logger.log_performance("Configs fetched", f"Protocol from {url}: {count} lines")
-                        return decoded_lines
+                        for line in lines:
+                            line = line.strip()
+                            if len(line) < 10 or line.startswith(('#', '//', '-', '=')):
+                                continue
+                            
+                            proto = None
+                            for p in groups:
+                                if line.startswith(f"{p}://"):
+                                    groups[p].append(line)
+                                    proto = p
+                                    break
+                            
+                            if proto:
+                                self.logger.log_performance("Line grouped", f"{proto}: {line[:30]}...")
+                        
+                        # Log group counts
+                        for p, lst in groups.items():
+                            self.logger.log_performance("Group count", f"{p}: {len(lst)}")
+                        
+                        return groups
             except Exception as e:
                 self.logger.log_error("Fetch failed", f"{url}: {str(e)}")
-        return []
+        
+        return groups
     
     async def _process_configuration_batch(self, protocol: str, raw_configs: List[str]) -> List[VPNConfig]:
         parsed = []
@@ -511,7 +500,6 @@ class ImprovedVPNScanner:
         if not parsed:
             return []
         
-        # Semaphore for concurrency
         semaphore = asyncio.Semaphore(self.config.MAX_WORKERS)
         async def test_with_sem(cfg):
             async with semaphore:
@@ -530,22 +518,20 @@ class ImprovedVPNScanner:
         validated.sort(key=lambda x: x.performance_score, reverse=True)
         return validated
     
-    async def scan_protocol(self, protocol: str) -> List[VPNConfig]:
-        self.logger.log_operation("Protocol scan initiated", f"Protocol: {protocol.upper()}")
-        raw = await self._fetch_raw_configs(self.sources[protocol])
-        if not raw:
-            self.logger.log_error("No configs", protocol)
-            return []
-        validated = await self._process_configuration_batch(protocol, raw)
-        self.validated_configs[protocol] = validated
-        self.logger.log_operation("Protocol scan completed", f"Protocol: {protocol} - Valid: {len(validated)}")
-        return validated
-    
     async def execute_improved_scan(self) -> bool:
         self.logger.log_operation("Enhanced scan pipeline initiated", "Status: STARTED")
-        for protocol in list(self.sources):
-            await self.scan_protocol(protocol)
-            await asyncio.sleep(2)  # Rate limit
+        
+        # Fetch and group
+        groups = await self._fetch_all_configs()
+        
+        # Process each group
+        protocols = ['vmess', 'vless', 'ss', 'trojan']
+        for protocol in protocols:
+            if groups[protocol]:
+                self.logger.log_operation("Processing group", f"Protocol: {protocol.upper()}")
+                validated = await self._process_configuration_batch(protocol, groups[protocol])
+                self.validated_configs[protocol] = validated
+                await asyncio.sleep(1)  # Small delay
         
         has_valid = any(self.validated_configs.values())
         if has_valid:
@@ -568,7 +554,7 @@ class ImprovedVPNScanner:
                     all_links.append(cfg.subscription_link)
             self.logger.log_performance("Saved", f"{proto}: {len(configs)}")
         
-        # Combined sub
+        # Combined
         combined_path = Path(self.config.OUTPUT_DIRECTORY) / "all_subscriptions.txt"
         with open(combined_path, 'w', encoding='utf-8') as f:
             for link in all_links:
@@ -616,7 +602,7 @@ class ImprovedVPNScanner:
 
 
 # =============================================================================
-# MANAGER & MAIN
+# MANAGER & MAIN (Unchanged)
 # =============================================================================
 
 class ImprovedExecutionManager:
