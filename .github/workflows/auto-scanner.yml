@@ -2,7 +2,7 @@
 # RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
 # Description: Automated VPN configuration validation with performance testing
 # Schedule: Hourly execution for fresh configuration updates
-# Version: 4.0.0
+# Version: 1.0.0
 # =============================================================================
 
 name: "🚀 RebelDev - Improved Auto Config Scanner"
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     
     # Timeout to prevent hanging jobs
-    timeout-minutes: 45  # Increased for relay tests
+    timeout-minutes: 45  # Increased for bulk configs & tests
     
     steps:
       - name: "🔄 Checkout Repository"
@@ -62,13 +62,13 @@ jobs:
       - name: "🧹 Clean Cache"
         run: |
           rm -rf RebelLink || true
-          echo "✅ Cache cleaned"
+          echo "✅ Cache and output cleaned"
           
       - name: "🚀 Execute Improved Scanner"
         run: |
           echo "Starting improved VPN configuration scan v${{ env.SCANNER_VERSION }}..."
           echo "This may take up to 30-40 minutes due to global latency..."
-          timeout 35m python auto_scanner.py
+          timeout 40m python auto_scanner.py
           if [ $? -ne 0 ]; then
             echo "❌ Scanner failed - Check logs"
             exit 1
