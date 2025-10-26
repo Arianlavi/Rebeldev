@@ -2,7 +2,7 @@
 # RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
 # Description: Automated VPN configuration validation with performance testing
 # Schedule: Hourly execution for fresh configuration updates
-# Version: 4.7.0
+# Version: 1.0.0
 # =============================================================================
 
 name: "🚀 RebelDev - Improved Auto Config Scanner"
@@ -22,7 +22,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.12'  # Updated to latest stable
-  SCANNER_VERSION: '4.7.0'
+  SCANNER_VERSION: '1.0.0'
 
 jobs:
   improved-scan-and-deploy:
@@ -95,14 +95,14 @@ import json
 try:
     with open('RebelLink/performance_report.json', 'r') as f:
         report = json.load(f)
-    print(f'✅ Scan completed: {report["scan_timestamp"]}')
-    print(f'📋 Processed: {report["performance_metrics"]["total_processed"]}')
-    print(f'✅ Valid: {report["performance_metrics"]["valid_configs"]}')
-    print(f'📊 Success rate: {report["performance_metrics"]["success_rate"]}%')
-    print(f'⚡ Avg Latency: {report["performance_metrics"]["avg_latency_ms"]}ms')
-    print(f'⭐ Avg Score: {report["performance_metrics"]["avg_score"]}')
+    print('✅ Scan completed: {}'.format(report["scan_timestamp"]))
+    print('📋 Processed: {}'.format(report["performance_metrics"]["total_processed"]))
+    print('✅ Valid: {}'.format(report["performance_metrics"]["valid_configs"]))
+    print('📊 Success rate: {}%'.format(report["performance_metrics"]["success_rate"]))
+    print('⚡ Avg Latency: {}ms'.format(report["performance_metrics"]["avg_latency_ms"]))
+    print('⭐ Avg Score: {}'.format(report["performance_metrics"]["avg_score"]))
 except Exception as e:
-    print(f'⚠️ Report read error: {e}')
+    print('⚠️ Report read error: {}'.format(e))
 EOF
               python validate_report.py
               rm validate_report.py
