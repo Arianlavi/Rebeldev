@@ -1,0 +1,9 @@
+# RebelDev VPN Scanner - Dependencies
+# Version: 2.0.0
+# Generated: 2024
+
+# HTTP requests library for API communication
+requests>=2.25.1
+
+# Note: Standard library imports are not listed here
+# All other dependencies are part of Python 3.9+ standard library
