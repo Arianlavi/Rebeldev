@@ -1,9 +1,13 @@
-# RebelDev VPN Scanner - Dependencies
-# Version: 2.0.0
-# Generated: 2024
+# RebelDev Enhanced VPN Scanner - Dependencies
+# Version: 4.0.0
+# Generated: 2025
 
 # HTTP requests library for API communication
-requests>=2.25.1
+requests>=2.31.0
 
+# Async HTTP for enhanced performance testing
+aiohttp>=3.8.0
+
+# Enhanced logging and monitoring
 # Note: Standard library imports are not listed here
 # All other dependencies are part of Python 3.9+ standard library
