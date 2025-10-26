@@ -59,6 +59,11 @@ jobs:
           sudo apt-get update && sudo apt-get install -y curl || true
           echo "✅ System permissions configured"
           
+      - name: "🧹 Clean Cache"
+        run: |
+          rm -rf RebelLink || true
+          echo "✅ Cache cleaned"
+          
       - name: "🚀 Execute Improved Scanner"
         run: |
           echo "Starting improved VPN configuration scan v${{ env.SCANNER_VERSION }}..."
