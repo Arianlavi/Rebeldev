@@ -2,7 +2,7 @@
 # RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
 # Description: Automated VPN configuration validation with performance testing
 # Schedule: Hourly execution for fresh configuration updates
-# Version: 1.0.0
+# Version: 4.7.0
 # =============================================================================
 
 name: "🚀 RebelDev - Improved Auto Config Scanner"
@@ -22,48 +22,44 @@ on:
 
 env:
   PYTHON_VERSION: '3.12'  # Updated to latest stable
-  SCANNER_VERSION: '1.0.0'
+  SCANNER_VERSION: '4.7.0'
 
 jobs:
   improved-scan-and-deploy:
     name: "🔍 Improved Scan & Deploy"
     runs-on: ubuntu-latest
-    
-    # Timeout to prevent hanging jobs
-    timeout-minutes: 45  # Increased for bulk configs & tests
-    
+    timeout-minutes: 45
+
     steps:
       - name: "🔄 Checkout Repository"
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0  # Full history for commits
-          
+          fetch-depth: 0
+
       - name: "🐍 Setup Python Environment"
-        uses: actions/setup-python@v5  # Latest version
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'  # Cache pip for faster installs
-          
+          cache: 'pip'
+
       - name: "📦 Install Dependencies"
         run: |
           python -m pip install --upgrade pip
-          pip install aiohttp requests  # Updated for async
+          pip install aiohttp requests
           echo "✅ Dependencies installed"
-          
+
       - name: "🔧 Setup System Permissions"
         run: |
-          # Enable ping without root
           sudo sysctl -w net.ipv4.ping_group_range="0 2147483647" || true
-          # Install curl if needed (for relay tests)
           sudo apt-get update && sudo apt-get install -y curl || true
           echo "✅ System permissions configured"
-          
+
       - name: "🧹 Clean Cache"
         run: |
           rm -rf RebelLink || true
           echo "✅ Cache and output cleaned"
-          
+
       - name: "🚀 Execute Improved Scanner"
         run: |
           echo "Starting improved VPN configuration scan v${{ env.SCANNER_VERSION }}..."
@@ -74,35 +70,33 @@ jobs:
             exit 1
           fi
           echo "✅ Scanner execution completed"
-          
+
       - name: "✅ Validate Output"
         run: |
           echo "Validating generated configurations..."
           if [ -d "RebelLink" ]; then
             echo "📁 RebelLink directory found"
-            # Count subscription files
             sub_count=$(find RebelLink -name "*_subscriptions.txt" -type f | wc -l)
             echo "📊 Found $sub_count subscription files (user-ready base64 links)"
-            
-            # Count total configs
+
             total_configs=$(grep -c '^[^#]' RebelLink/*_subscriptions.txt 2>/dev/null || echo 0)
             echo "📈 Total valid configs: $total_configs"
-            
+
             if [ -f "RebelLink/performance_report.json" ]; then
               echo "📊 Performance report generated"
-              cat > validate_report.py << 'EOF'
+              cat << 'EOF' > validate_report.py
 import json
 try:
     with open('RebelLink/performance_report.json', 'r') as f:
         report = json.load(f)
-    print('✅ Scan completed: {}'.format(report["scan_timestamp"]))
-    print('📋 Processed: {}'.format(report["performance_metrics"]["total_processed"]))
-    print('✅ Valid: {}'.format(report["performance_metrics"]["valid_configs"]))
-    print('📊 Success rate: {}%'.format(report["performance_metrics"]["success_rate"]))
-    print('⚡ Avg Latency: {}ms'.format(report["performance_metrics"]["avg_latency_ms"]))
-    print('⭐ Avg Score: {}'.format(report["performance_metrics"]["avg_score"]))
+    print(f"✅ Scan completed: {report['scan_timestamp']}")
+    print(f"📋 Processed: {report['performance_metrics']['total_processed']}")
+    print(f"✅ Valid: {report['performance_metrics']['valid_configs']}")
+    print(f"📊 Success rate: {report['performance_metrics']['success_rate']}%")
+    print(f"⚡ Avg Latency: {report['performance_metrics']['avg_latency_ms']}ms")
+    print(f"⭐ Avg Score: {report['performance_metrics']['avg_score']}")
 except Exception as e:
-    print('⚠️ Report read error: {}'.format(e))
+    print(f"⚠️ Report read error: {e}")
 EOF
               python validate_report.py
               rm validate_report.py
@@ -110,7 +104,7 @@ EOF
               echo "⚠️ Performance report not found"
               exit 1
             fi
-            
+
             if [ $sub_count -eq 0 ]; then
               echo "❌ No subscription files generated"
               exit 1
@@ -120,13 +114,12 @@ EOF
             exit 1
           fi
           echo "✅ Validation passed"
-          
+
       - name: "🔄 Deploy Configurations"
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "RebelDev Improved Scanner"
-          
-          # Check for changes
+
           if git diff --quiet HEAD -- RebelLink/; then
             echo "🟡 No configuration changes detected - Skipping commit"
           else
@@ -134,20 +127,20 @@ EOF
             valid_count=$(python -c "import json; d=json.load(open('RebelLink/performance_report.json')); print(d['performance_metrics']['valid_configs'])")
             timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
             git commit -m "🤖 Improved Auto-Update: VPN Configurations ${timestamp}" \
-                      -m "Enhanced scanner v${{ env.SCANNER_VERSION }} with base64 subscriptions & relay tests" \
-                      -m "Features: Async fetch, Real VPN relay (curl), Cache retention (7 days), User-ready links" \
-                      -m "Success: ${valid_count} valid configs"
+                        -m "Enhanced scanner v${{ env.SCANNER_VERSION }} with base64 subscriptions & relay tests" \
+                        -m "Features: Async fetch, Real VPN relay (curl), Cache retention (7 days), User-ready links" \
+                        -m "Success: ${valid_count} valid configs"
             git push
             echo "✅ Configuration updates deployed to main branch"
           fi
-          
+
       - name: "📤 Upload Artifacts (Optional)"
-        if: always()  # Run even on failure for debugging
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rebeldev-scan-results
           path: |
             RebelLink/
             scanner.log
-          retention-days: 7  # Match config retention
+          retention-days: 7
           if-no-files-found: ignore
