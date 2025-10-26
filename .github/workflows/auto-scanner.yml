@@ -22,7 +22,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.12'  # Updated to latest stable
-  SCANNER_VERSION: '4.2.0'
+  SCANNER_VERSION: '1.0.0'
 
 jobs:
   improved-scan-and-deploy:
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     
     # Timeout to prevent hanging jobs
-    timeout-minutes: 40  # Increased for relay tests
+    timeout-minutes: 45  # Increased for relay tests
     
     steps:
       - name: "🔄 Checkout Repository"
