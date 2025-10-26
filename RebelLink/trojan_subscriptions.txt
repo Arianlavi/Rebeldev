@@ -1,15 +1,18 @@
 trojan://pass@160.16.106.144:5321?security=tls&sni=160.16.106.144#🇸🇬 新加坡|@ripaojiedian
-trojan://pass@160.16.106.144:2381?security=tls&sni=160.16.106.144#🇺🇸 美国2|@ripaojiedian
+trojan://pass@160.16.106.144:2467?security=tls&sni=160.16.106.144#🇺🇸 美国|@ripaojiedian
+trojan://pass@160.16.106.144:5041?security=tls&sni=160.16.106.144#🇸🇬 新加坡2|@stairnode
+trojan://pass@160.16.106.144:2467?security=tls&sni=160.16.106.144#🇺🇸 美国|@stairnode
 trojan://pass@160.16.106.144:3161?security=tls&sni=160.16.106.144#🇯🇵JP日本
 trojan://pass@160.16.106.144:5041?security=tls&sni=160.16.106.144#🇸🇬SG新加坡2 611.8KB/s
 trojan://pass@160.16.106.144:5321?security=tls&sni=160.16.106.144#新加坡|@ripaojiedian
 trojan://pass@160.16.106.144:2467?security=tls&sni=160.16.106.144#美国|@ripaojiedian
 trojan://pass@160.16.106.144:3161?security=tls&sni=160.16.106.144#🇯🇵 日本3|@ripaojiedian
-trojan://pass@160.16.106.144:2467?security=tls&sni=160.16.106.144#🇺🇸 美国|@ripaojiedian
-trojan://pass@160.16.106.144:5041?security=tls&sni=160.16.106.144#🇸🇬 新加坡2|@stairnode
-trojan://pass@160.16.106.144:2467?security=tls&sni=160.16.106.144#🇺🇸 美国|@stairnode
+trojan://pass@160.16.106.144:2381?security=tls&sni=160.16.106.144#🇺🇸 美国2|@ripaojiedian
 trojan://pass@58.152.110.83:443?security=tls&sni=58.152.110.83#HK 2.1MB/s
-trojan://pass@58.152.46.98:443?security=tls&sni=58.152.46.98#🇭🇰 香港5|@ripaojiedian
+trojan://pass@58.152.53.136:443?security=tls&sni=58.152.53.136#🇭🇰 香港 电讯盈科有限公司
+trojan://pass@58.152.53.136:443?security=tls&sni=58.152.53.136#🇭🇰HK香港3 173.8KB/s
+trojan://pass@58.152.53.136:443?security=tls&sni=58.152.53.136#🇭🇰 香港4|@stairnode
 trojan://pass@58.152.46.98:443?security=tls&sni=58.152.46.98#🇭🇰 香港5|@stairnode
 trojan://pass@58.152.46.98:443?security=tls&sni=58.152.46.98#🇭🇰HK香港
+trojan://pass@58.152.46.98:443?security=tls&sni=58.152.46.98#🇭🇰 香港5|@ripaojiedian
 trojan://pass@58.152.46.98:443?security=tls&sni=58.152.46.98#香港5|@ripaojiedian
