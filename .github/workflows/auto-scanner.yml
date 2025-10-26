@@ -1,5 +1,5 @@
 # =============================================================================
-# RebelDev Enhanced Auto Scanner - GitHub Actions Workflow
+# RebelDev Auto Scanner - GitHub Actions Workflow
 # Description: Automated VPN configuration validation with performance testing
 # Schedule: Hourly execution for fresh configuration updates
 # Version: 1.0.0
