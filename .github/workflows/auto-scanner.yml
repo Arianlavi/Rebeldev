@@ -42,21 +42,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install aiohttp requests
-
       - name: "🔧 Setup System Permissions"
         run: |
           sudo sysctl -w net.ipv4.ping_group_range="0 2147483647" || true
           sudo apt-get update && sudo apt-get install -y curl || true
-
       - name: "🧹 Clean Cache"
         run: |
           rm -rf RebelLink || true
-
       - name: "🚀 Run Scanner"
         run: |
           echo "Starting scan v${{ env.SCANNER_VERSION }}..."
           timeout 40m python auto_scanner.py
-
       - name: "✅ Validate Output"
         run: |
           echo "Validating generated configurations..."
@@ -64,18 +60,18 @@ jobs:
             sub_count=$(find RebelLink -name "*_subscriptions.txt" -type f | wc -l)
             echo "Found $sub_count subscription files"
             if [ -f "RebelLink/performance_report.json" ]; then
-              echo "import json" > validate_report.py
-              echo "try:" >> validate_report.py
-              echo "    with open('RebelLink/performance_report.json') as f:" >> validate_report.py
-              echo "        r=json.load(f)" >> validate_report.py
-              echo "    print(f'✅ Scan completed: {r[\"scan_timestamp\"]}')" >> validate_report.py
-              echo "    print(f'📋 Processed: {r[\"performance_metrics\"][\"total_processed\"]}')" >> validate_report.py
-              echo "    print(f'✅ Valid: {r[\"performance_metrics\"][\"valid_configs\"]}')" >> validate_report.py
-              echo "    print(f'📊 Success rate: {r[\"performance_metrics\"][\"success_rate\"]}%')" >> validate_report.py
-              echo "    print(f'⚡ Avg Latency: {r[\"performance_metrics\"][\"avg_latency_ms\"]}ms')" >> validate_report.py
-              echo "    print(f'⭐ Avg Score: {r[\"performance_metrics\"][\"avg_score\"]}')" >> validate_report.py
-              echo "except Exception as e:" >> validate_report.py
-              echo "    print(f'⚠️ Report read error: {e}')" >> validate_report.py
+              echo 'import json' > validate_report.py
+              echo 'try:' >> validate_report.py
+              echo '    with open("RebelLink/performance_report.json") as f:' >> validate_report.py
+              echo '        r = json.load(f)' >> validate_report.py
+              echo '    print("✅ Scan completed: " + r["scan_timestamp"])' >> validate_report.py
+              echo '    print("📋 Processed: " + str(r["performance_metrics"]["total_processed"]))' >> validate_report.py
+              echo '    print("✅ Valid: " + str(r["performance_metrics"]["valid_configs"]))' >> validate_report.py
+              echo '    print("📊 Success rate: " + str(r["performance_metrics"]["success_rate"]) + "%")' >> validate_report.py
+              echo '    print("⚡ Avg Latency: " + str(r["performance_metrics"]["avg_latency_ms"]) + "ms")' >> validate_report.py
+              echo '    print("⭐ Avg Score: " + str(r["performance_metrics"]["avg_score"]))' >> validate_report.py
+              echo 'except Exception as e:' >> validate_report.py
+              echo '    print("⚠️ Report read error: " + str(e))' >> validate_report.py
               python validate_report.py
               rm validate_report.py
             else
@@ -87,12 +83,10 @@ jobs:
             exit 1
           fi
           echo "✅ Validation passed"
-
       - name: "🔄 Deploy Configurations"
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "RebelDev Improved Scanner"
-
           if git diff --quiet HEAD -- RebelLink/; then
             echo "🟡 No configuration changes detected"
           else
@@ -103,7 +97,6 @@ jobs:
                         -m "v${{ env.SCANNER_VERSION }} - ${valid_count} valid configs"
             git push
           fi
-
       - name: "📤 Upload Artifacts"
         if: always()
         uses: actions/upload-artifact@v4
