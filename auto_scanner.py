@@ -2,12 +2,6 @@
 """
 RebelDev Enterprise VPN Configuration Scanner
 ============================================
-
-Fixed:
-- Logger in Parser: Use EnterpriseLogger instance (passed from Scanner)
-- datetime.utcnow() -> datetime.now(datetime.UTC)
-- No log_error on standard logger
-
 Author: Arian Lavi 
 Version: 1.0.0
 License: Proprietary - RebelDev Internal Use
@@ -24,7 +18,7 @@ import sys
 import logging
 import subprocess
 from urllib.parse import urlparse, unquote, parse_qs
-from datetime import datetime, timedelta, UTC  # Added UTC
+from datetime import datetime, timedelta, UTC
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 import hashlib
@@ -42,7 +36,7 @@ class ScannerConfig:
     """Configuration with defaults - Real Repo"""
     SOURCE_REPOSITORY: str = "barry-far/V2ray-Config"
     SOURCE_BRANCH: str = "main"
-    SOURCE_PATH: str = "Sub1.txt"  # Real subscription file
+    SOURCE_PATH: str = "Sub1.txt"  
     
     MAX_LATENCY_MS: int = 3000
     MAX_JITTER_MS: int = 400
@@ -96,7 +90,7 @@ class VPNConfig:
         if not self.config_hash:
             self.config_hash = hashlib.sha256(self.raw_config.encode('utf-8', errors='ignore')).hexdigest()[:16]
         if not self.last_tested:
-            self.last_tested = datetime.now(UTC)  # Fixed deprecation
+            self.last_tested = datetime.now(UTC)
     
     def calculate_performance_score(self):
         score = 100.0
@@ -111,26 +105,7 @@ class VPNConfig:
         self.performance_score = max(0.0, min(100.0, score))
     
     def to_subscription_link(self) -> str:
-        if not self.host:
-            return self.raw_config
-        try:
-            if self.protocol == 'vmess':
-                vmess_dict = {
-                    "v": "2", "ps": self.name[:50], "add": self.host, "port": str(self.port),
-                    "id": "default-uuid", "aid": 0, "net": "tcp", "type": "none",
-                    "host": "", "path": "", "tls": ""
-                }
-                b64_json = base64.b64encode(json.dumps(vmess_dict).encode('utf-8')).decode('ascii')
-                return f"vmess://{b64_json}"
-            elif self.protocol == 'vless':
-                return f"vless://default-uuid@{self.host}:{self.port}?encryption=none&security=none&type=tcp#{self.name[:50]}"
-            elif self.protocol == 'ss':
-                b64_part = base64.b64encode(f"aes-256-gcm:pass@{self.host}:{self.port}".encode('utf-8')).decode('ascii')
-                return f"ss://{b64_part}#{self.name[:50]}"
-            elif self.protocol == 'trojan':
-                return f"trojan://pass@{self.host}:{self.port}?security=tls&sni={self.host}#{self.name[:50]}"
-        except:
-            pass
+        # Always return raw config, no change
         return self.raw_config
 
 
@@ -159,12 +134,12 @@ class EnterpriseLogger:
 
 
 # =============================================================================
-# PARSER (Fixed Logger)
+# PARSER (Fixed for trojan/vless/ss, non-ASCII)
 # =============================================================================
 
 class ConfigurationParser:
-    def __init__(self, enterprise_logger):  # Pass EnterpriseLogger
-        self.logger = enterprise_logger  # Use EnterpriseLogger
+    def __init__(self, enterprise_logger):
+        self.logger = enterprise_logger
         self.default_ports = {'ss': 8388, 'trojan': 443, 'vless': 443, 'vmess': 443}
     
     def parse_configuration(self, protocol: str, raw_config: str) -> Optional[VPNConfig]:
@@ -181,11 +156,11 @@ class ConfigurationParser:
             if protocol == 'vmess':
                 parsed = self._parse_vmess(decoded)
             elif protocol == 'vless':
-                parsed = self._parse_vless(decoded)
+                parsed = self._parse_vless(raw_config)  # Use raw for vless
             elif protocol == 'ss':
-                parsed = self._parse_ss(decoded)
+                parsed = self._parse_ss(raw_config)  # Use raw for ss
             elif protocol == 'trojan':
-                parsed = self._parse_trojan(decoded)
+                parsed = self._parse_trojan(raw_config)  # Use raw for trojan
             else:
                 return None
             
@@ -194,7 +169,7 @@ class ConfigurationParser:
                 if host and len(host) > 3:
                     return VPNConfig(protocol=protocol, host=host, port=port, name=name, raw_config=raw_config)
         except Exception as e:
-            self.logger.log_error(f"Parse exception {protocol}", str(e)[:100])  # Now EnterpriseLogger
+            self.logger.log_error(f"Parse exception {protocol}", str(e)[:100])
         
         if not host:
             self.logger.log_error(f"Missing hostname in {protocol.upper()}", f"Config: {raw_config[:50]}...")
@@ -202,7 +177,7 @@ class ConfigurationParser:
     
     def _try_decode(self, raw: str) -> str:
         try:
-            raw_clean = re.sub(r'[^\x00-\x7F]', '', raw)
+            raw_clean = re.sub(r'[^\x00-\x7F]', '', raw)  # Ignore non-ASCII
             padded = raw_clean + '==' * ((4 - len(raw_clean) % 4) % 4)
             decoded_bytes = base64.b64decode(padded, validate=False)
             return decoded_bytes.decode('utf-8', errors='ignore').strip()
@@ -234,11 +209,11 @@ class ConfigurationParser:
         
         return None, None, 'VMESS'
     
-    def _parse_vless(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        if not decoded.startswith('vless://'):
+    def _parse_vless(self, raw: str) -> Tuple[Optional[str], Optional[int], str]:
+        if not raw.startswith('vless://'):
             return None, None, 'VLESS'
         
-        uri = decoded[8:]
+        uri = raw[8:]
         parsed = urlparse('vless://' + uri)
         if '@' in parsed.netloc:
             _, host_port = parsed.netloc.split('@', 1)
@@ -252,14 +227,16 @@ class ConfigurationParser:
             host = host_port
             port = 443
         
-        name = parse_qs(parsed.query).get('remark', [parsed.fragment or 'VLESS'])[0][:50]
+        # Name from # or query remark
+        name_match = re.search(r'#(.+)$', raw)
+        name = unquote(name_match.group(1))[:50] if name_match else parse_qs(parsed.query).get('remark', [parsed.fragment or 'VLESS'])[0][:50]
         return host, port, name
     
-    def _parse_ss(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        if not decoded.startswith('ss://'):
+    def _parse_ss(self, raw: str) -> Tuple[Optional[str], Optional[int], str]:
+        if not raw.startswith('ss://'):
             return None, None, 'SS'
         
-        b64_part = decoded[5:]
+        b64_part = raw[5:]
         try:
             decoded_inner = self._try_decode(b64_part)
             if '@' in decoded_inner:
@@ -278,17 +255,17 @@ class ConfigurationParser:
                 else:
                     return None, None, 'SS'
             
-            name_match = re.search(r'#(.+)$', decoded)
+            name_match = re.search(r'#(.+)$', raw)
             name = unquote(name_match.group(1))[:50] if name_match else 'SS'
             return host, port, name
         except:
             return None, None, 'SS'
     
-    def _parse_trojan(self, decoded: str) -> Tuple[Optional[str], Optional[int], str]:
-        if not decoded.startswith('trojan://'):
+    def _parse_trojan(self, raw: str) -> Tuple[Optional[str], Optional[int], str]:
+        if not raw.startswith('trojan://'):
             return None, None, 'TROJAN'
         
-        uri = decoded[9:]
+        uri = raw[9:]
         last_at = uri.rfind('@')
         if last_at == -1:
             return None, None, 'TROJAN'
@@ -309,8 +286,8 @@ class ConfigurationParser:
             host = host_port
             port = 443
         
-        name_match = re.search(r'#(.+)$', decoded)
-        name = unquote(name_match.group(1))[:50] if name_match else parse_qs(params).get('remark', ['TROJAN'])[0]
+        name_match = re.search(r'#(.+)$', raw)
+        name = unquote(name_match.group(1))[:50] if name_match else parse_qs(params).get('remark', ['TROJAN'])[0][:50]
         return host, port, name
 
 
@@ -399,23 +376,23 @@ class ImprovedPerformanceTester:
         await self.test_relay_connection(config)
         config.calculate_performance_score()
         config.is_valid = config.latency <= self.config.MAX_LATENCY_MS and config.relay_success
-        config.subscription_link = config.to_subscription_link()
+        config.subscription_link = config.to_subscription_link()  # Raw
         return config
 
 
 # =============================================================================
-# SCANNER (Pass Logger to Parser)
+# SCANNER
 # =============================================================================
 
 class ImprovedVPNScanner:
     def __init__(self, config: ScannerConfig):
         self.config = config
         self.logger = EnterpriseLogger()
-        self.parser = ConfigurationParser(self.logger)  # Pass logger
+        self.parser = ConfigurationParser(self.logger)
         self.tester = ImprovedPerformanceTester(config, self.logger)
         self.unique_configs = self._load_cache()
         self.validated_configs: Dict[str, List[VPNConfig]] = {}
-        self.performance_stats = {'start_time': datetime.now(UTC), 'total_processed': 0, 'valid_configs': 0, 'failed_tests': 0, 'duplicates_found': 0}  # Fixed deprecation
+        self.performance_stats = {'start_time': datetime.now(UTC), 'total_processed': 0, 'valid_configs': 0, 'failed_tests': 0, 'duplicates_found': 0}
     
     def _load_cache(self) -> set:
         cache_path = Path(self.config.OUTPUT_DIRECTORY) / self.config.CACHE_FILE
@@ -446,7 +423,7 @@ class ImprovedVPNScanner:
         
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             try:
-                async with session.get(url, headers={'User-Agent': 'RebelDev-Scanner/4.8.0'}) as resp:
+                async with session.get(url, headers={'User-Agent': 'RebelDev-Scanner/1.1.0'}) as resp:
                     if resp.status == 200:
                         content = await resp.text(encoding='utf-8', errors='ignore')
                         lines = content.splitlines()
@@ -466,9 +443,6 @@ class ImprovedVPNScanner:
                                     groups[p].append(line)
                                     proto = p
                                     break
-                            
-                            if proto:
-                                self.logger.log_performance("Line grouped", f"{proto}: {len(groups[p])} total")
                         
                         for p, lst in groups.items():
                             self.logger.log_performance("Group count", f"{p}: {len(lst)}")
@@ -543,7 +517,7 @@ class ImprovedVPNScanner:
             path = Path(self.config.OUTPUT_DIRECTORY) / f"{proto}_subscriptions.txt"
             with open(path, 'w', encoding='utf-8') as f:
                 for cfg in configs:
-                    f.write(f"{cfg.subscription_link}\n")
+                    f.write(f"{cfg.subscription_link}\n")  # Raw link
                     all_links.append(cfg.subscription_link)
             self.logger.log_performance("Saved", f"{proto}: {len(configs)}")
         
