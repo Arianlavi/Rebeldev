@@ -1,9 +1,9 @@
-vless://default-uuid@104.18.26.90:2096?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@185.146.173.39:8880?encryption=none&security=none&type=tcp#%40v2Meli
-vless://default-uuid@172.67.157.220:443?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@104.18.26.90:2096?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@108.162.195.20:8880?encryption=none&security=none&type=tcp#%40meli_proxyy
 vless://default-uuid@104.18.26.90:2096?encryption=none&security=none&type=tcp#@meli_proxyy
+vless://default-uuid@104.18.26.90:2096?encryption=none&security=none&type=tcp#@meli_proxyy
+vless://default-uuid@172.67.157.220:443?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@147135004002.sec20org.com:443?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@147135004002.sec20org.com:443?encryption=none&security=none&type=tcp#@meli_proxyy
 vless://default-uuid@147135001195.sec22org.com:443?encryption=none&security=none&type=tcp#@meli_proxyy
