@@ -1,10 +1,10 @@
 trojan://trojan@ip.sb:443?allowInsecure=0&sni=nixian.pages.dev&ws=1&wspath=%2F%3Fed%3D2560%2F%3FJoin-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-Join-sho--Telegram--VITUREY-#%F0%9F%87%BA%F0%9F%87%B8%20_US_%E7%BE%8E%E5%9B%BD
 trojan://trojan@www.digitalocean.com:443?allowInsecure=0&sni=azadnet-9ya.pages.dev&ws=1&wspath=%2F%3Fed%3D2560#%F0%9F%87%BA%F0%9F%87%B8%20_US_%E7%BE%8E%E5%9B%BD
 trojan://6f061e76-3e76-4be3-8241-d773031c7109@178.208.77.191:443?path=%2FFree-VPN-CF-Geo-Project%2F178.208.77.191%3D443&security=tls&host=joss.krekkrek.web.id&fp=randomized&type=ws&sni=joss.krekkrek.web.id#%5B%40v2FreeHub%5D%20%F0%9F%87%B3%F0%9F%87%B1%20Trojan%20WS%20TLS
-trojan://4f673b32-3360-4bfa-b031-54676e87d1bd@84.235.245.18:34501?path=%2FFree-VPN-CF-Geo-Project%2F84.235.245.18%3D34501&security=tls&host=joss.krekkrek.web.id&fp=randomized&type=ws&sni=joss.krekkrek.web.id#%5B%40v2FreeHub%5D%20%F0%9F%87%A6%F0%9F%87%AA%20Trojan%20WS%20TLS
+trojan://BxceQaOe@58.152.53.3:443?allowInsecure=0#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF%20%E7%94%B5%E8%AE%AF%E7%9B%88%E7%A7%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8
+trojan://e4e262d453466988575c397a30562337@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF3%7C%40stairnode
+trojan://bca467b8c15211d189008a93c7519d3b@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF%20%E7%94%B5%E8%AE%AF%E7%9B%88%E7%A7%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8
+trojan://e4e262d453466988575c397a30562337@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF3%7C%40ripaojiedian
 trojan://BxceQaOe@203.198.122.129:443?allowInsecure=1#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF5%7C%40ripaojiedian
 trojan://BxceQaOe@203.198.122.129:443?allowInsecure=1#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF5%7C%40stairnode
-trojan://bca467b8c15211d189008a93c7519d3b@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF%20%E7%94%B5%E8%AE%AF%E7%9B%88%E7%A7%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8
-trojan://e4e262d453466988575c397a30562337@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF3%7C%40stairnode
-trojan://BxceQaOe@58.152.53.3:443?allowInsecure=0#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF%20%E7%94%B5%E8%AE%AF%E7%9B%88%E7%A7%91%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8
-trojan://e4e262d453466988575c397a30562337@58.152.53.42:443?allowInsecure=0&sni=www.nintendogames.net#%F0%9F%87%AD%F0%9F%87%B0%20%E9%A6%99%E6%B8%AF3%7C%40ripaojiedian
+trojan://4f673b32-3360-4bfa-b031-54676e87d1bd@84.235.245.18:34501?path=%2FFree-VPN-CF-Geo-Project%2F84.235.245.18%3D34501&security=tls&host=joss.krekkrek.web.id&fp=randomized&type=ws&sni=joss.krekkrek.web.id#%5B%40v2FreeHub%5D%20%F0%9F%87%A6%F0%9F%87%AA%20Trojan%20WS%20TLS
