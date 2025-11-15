@@ -1144,26 +1144,25 @@ function applyTranslations(lang = 'fa') {
   }
 }
 
-// تنظیم event listener برای دکمه‌های زبان
+
 function setupLanguageSwitchers() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      
-      // حذف active از همه دکمه‌ها
+
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
       
-      // اضافه کردن active به دکمه کلیک شده
+
       btn.classList.add('active');
       
-      // اعمال ترجمه
+
       const lang = btn.getAttribute('data-lang');
       applyTranslations(lang);
       
-      // ذخیره زبان در localStorage
+
       localStorage.setItem('selectedLanguage', lang);
       
-      // بستن منوی موبایل اگر باز باشد
+
       if (window.innerWidth <= 900) {
         mobileMenu.classList.remove('active');
         mobileToggle.setAttribute('aria-expanded', 'false');
@@ -1238,10 +1237,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Initialize application
 function initApp() {
-  // بارگیری زبان ذخیره شده یا استفاده از زبان پیش‌فرض
+
   const savedLanguage = localStorage.getItem('selectedLanguage') || 'fa';
   
-  // تنظیم active بر اساس زبان ذخیره شده
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.getAttribute('data-lang') === savedLanguage) {
       btn.classList.add('active');
@@ -1249,17 +1247,14 @@ function initApp() {
       btn.classList.remove('active');
     }
   });
-  
-  // اعمال ترجمه
+
   applyTranslations(savedLanguage);
-  
-  // تنظیم event listenerهای زبان
+
   setupLanguageSwitchers();
   
   console.log('Application initialized with language:', savedLanguage);
 }
 
-// شروع اپلیکیشن وقتی DOM آماده است
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
@@ -1267,4 +1262,5 @@ if (document.readyState === 'loading') {
 }
 </script>
 </body>
+
 </html>
