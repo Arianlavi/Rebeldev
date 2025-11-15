@@ -649,7 +649,6 @@ const TRANSLATIONS = {
   }
 };
 
-// سیستم ترجمه
 function applyTranslations(lang = 'fa') {
   document.querySelectorAll('[data-translate]').forEach(element => {
     const key = element.getAttribute('data-translate');
@@ -658,7 +657,6 @@ function applyTranslations(lang = 'fa') {
     }
   });
   
-  // تغییر direction بر اساس زبان
   if (lang === 'fa') {
     document.documentElement.dir = 'rtl';
     document.documentElement.lang = 'fa';
@@ -671,26 +669,20 @@ function applyTranslations(lang = 'fa') {
   }
 }
 
-// تنظیم event listener برای دکمه‌های زبان
 function setupLanguageSwitchers() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       
-      // حذف active از همه دکمه‌ها
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
       
-      // اضافه کردن active به دکمه کلیک شده
       btn.classList.add('active');
       
-      // اعمال ترجمه
       const lang = btn.getAttribute('data-lang');
       applyTranslations(lang);
       
-      // ذخیره زبان در localStorage
       localStorage.setItem('selectedLanguage', lang);
       
-      // بستن منوی موبایل اگر باز باشد
       if (window.innerWidth <= 900) {
         mobileMenu.classList.remove('active');
         mobileToggle.setAttribute('aria-expanded', 'false');
@@ -700,7 +692,6 @@ function setupLanguageSwitchers() {
   });
 }
 
-// سیستم کپی آدرس
 function setupCopyButtons() {
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -709,21 +700,16 @@ function setupCopyButtons() {
       try {
         await navigator.clipboard.writeText(address);
         
-        // تغییر استایل دکمه
         btn.innerHTML = '<i class="fas fa-check"></i> کپی شد!';
         btn.classList.add('copied');
-        
-        // نمایش پاپ آپ
         showPopup('آدرس با موفقیت کپی شد ✅', 'ok');
         
-        // بازگشت به حالت اولیه بعد از 2 ثانیه
         setTimeout(() => {
           btn.innerHTML = '<i class="fas fa-copy"></i> کپی آدرس';
           btn.classList.remove('copied');
         }, 2000);
         
       } catch (err) {
-        // روش fallback برای مرورگرهای قدیمی
         const textArea = document.createElement('textarea');
         textArea.value = address;
         document.body.appendChild(textArea);
@@ -740,7 +726,6 @@ function setupCopyButtons() {
   });
 }
 
-// نمایش پاپ آپ
 function showPopup(msg, type = 'ok', time = 2500) {
   const popup = document.getElementById('popup');
   popup.textContent = msg;
@@ -806,10 +791,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Initialize application
 function initApp() {
-  // بارگیری زبان ذخیره شده یا استفاده از زبان پیش‌فرض
   const savedLanguage = localStorage.getItem('selectedLanguage') || 'fa';
   
-  // تنظیم active بر اساس زبان ذخیره شده
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.getAttribute('data-lang') === savedLanguage) {
       btn.classList.add('active');
@@ -818,22 +801,14 @@ function initApp() {
     }
   });
   
-  // اعمال ترجمه
   applyTranslations(savedLanguage);
-  
-  // تنظیم event listenerهای زبان
   setupLanguageSwitchers();
-  
-  // تنظیم دکمه‌های کپی
   setupCopyButtons();
-  
-  // تنظیم منوی موبایل
   setupMobileMenu();
   
   console.log('Donation page initialized with language:', savedLanguage);
 }
 
-// شروع اپلیکیشن وقتی DOM آماده است
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
@@ -841,4 +816,5 @@ if (document.readyState === 'loading') {
 }
 </script>
 </body>
+
 </html>
