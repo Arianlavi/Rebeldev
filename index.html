@@ -738,7 +738,7 @@ function setupMobileMenu() {
 
 async function fetchWithCORSProxy(url, proxyIndex = 0) {
   if (proxyIndex >= CORS_PROXIES.length) {
-    throw new Error('تمام proxyها شکست خوردند');
+    throw new Error('تمام پروکسی شکست خوردند');
   }
 
   const proxy = CORS_PROXIES[proxyIndex];
@@ -748,7 +748,7 @@ async function fetchWithCORSProxy(url, proxyIndex = 0) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
     
-    console.log(`تلاش با proxy ${proxyIndex}: ${targetUrl}`);
+    console.log(`تلاش با پروکسی ${proxyIndex}: ${targetUrl}`);
     
     const response = await fetch(targetUrl, {
       signal: controller.signal,
@@ -1012,7 +1012,7 @@ function initApp() {
   setupMobileMenu();
   applyTranslations('fa');
   
-  // نمایش متریک‌های پیشرفته
+
   displayEnhancedMetrics();
 
   setTimeout(() => {
