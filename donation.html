@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rebeldevx — حمایت مالی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg-1:#071018;
+  --bg-2:#041018;
+  --primary:#6CD0B3;
+  --accent:#FF6B6B;
+  --text:#EDF2F7;
+  --muted:#9AA8B0;
+  --glass-bg: rgba(8,12,16,0.45);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-blur: 25px;
+  --radius:16px;
+  --shadow: 0 25px 60px rgba(0,0,0,0.65);
+  --max-width:1400px;
+  --transition: .35s cubic-bezier(.2,.9,.2,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;padding:0;background:
+  radial-gradient(circle at 10% 10%, var(--bg-1) 0%, var(--bg-2) 30%, #01060b 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(var(--glass-blur));z-index:-1;pointer-events:none}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 1.5rem}
+.glass{
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+/* NAV */
+.navbar{position:fixed;left:0;right:0;top:16px;padding:.5rem;z-index:1200;display:flex;justify-content:center}
+.nav-inner{width:100%;max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.5rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{
+  width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary), #9DE6CD);display:flex;align-items:center;justify-content:center;color:#031617;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,0.5)
+}
+.site-title{font-weight:800;font-size:1.2rem;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:.8rem;align-items:center}
+.nav-links a{padding:.6rem 1rem;border-radius:12px;color:var(--text);text-decoration:none;display:inline-flex;gap:.6rem;align-items:center;transition:all var(--transition)}
+.nav-links a:hover{background:rgba(255,255,255,0.05);transform:translateY(-2px)}
+.mobile-toggle{display:none;background:transparent;border:0;color:var(--text);font-size:1.25rem;cursor:pointer;padding:.5rem}
+
+/* Language */
+.lang-group{display:flex;gap:.5rem;align-items:center}
+.lang-btn{padding:.4rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);font-weight:600;transition:all var(--transition);cursor:pointer}
+.lang-btn.active{background:var(--primary);color:#021217;border-color:transparent}
+.lang-btn:hover{background:rgba(255,255,255,0.05)}
+
+/* HERO */
+.hero{padding:8rem 0 3rem;text-align:center}
+.hero .container{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.hero h1{font-size:3rem;margin:0;font-weight:800;background:linear-gradient(135deg, var(--text), var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);max-width:900px;font-size:1.1rem;line-height:1.6}
+.cta{display:flex;gap:1rem;margin-top:1.5rem;justify-content:center}
+.btn{padding:.9rem 1.8rem;border-radius:14px;font-weight:700;display:inline-flex;gap:.8rem;align-items:center;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none;font-family:inherit;font-size:1rem}
+.btn.primary{background:var(--primary);color:#021217;box-shadow:0 8px 30px rgba(108,208,179,0.3)}
+.btn.ghost{border:1px solid rgba(255,255,255,0.08);color:var(--text);background:rgba(255,255,255,0.03)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,0.4)}
+.btn:active{transform:translateY(-1px)}
+
+/* CONTENT SECTIONS */
+.section{padding:3rem 0}
+.title-center{text-align:center;margin-bottom:2rem;font-size:1.8rem;font-weight:700}
+
+/* DONATION CARDS */
+.donation-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem}
+.donation-card{padding:2rem;border-radius:16px;text-align:center;transition:all var(--transition)}
+.donation-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.donation-icon{font-size:3rem;color:var(--primary);margin-bottom:1.5rem;display:block}
+.donation-card h3{font-size:1.4rem;margin-bottom:1rem;color:var(--text)}
+.donation-card p{color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+
+/* ADDRESS BOX */
+.address-box{background:rgba(0,0,0,0.3);padding:1.5rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);margin:1rem 0;font-family:monospace;font-size:0.9rem;position:relative}
+.address-text{word-break:break-all;margin-bottom:1rem}
+.copy-btn{padding:.5rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--primary);color:#021217;cursor:pointer;transition:all var(--transition);font-weight:600}
+.copy-btn:hover{background:#5ac0a0;transform:translateY(-2px)}
+.copy-btn.copied{background:var(--accent);color:#fff}
+
+/* FEATURES */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.feature{padding:2rem 1.5rem;border-radius:16px;text-align:center;transition:all var(--transition)}
+.feature:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.feature i{font-size:2.5rem;color:var(--primary);display:block;margin-bottom:1rem}
+.feature h4{margin:.5rem 0;font-weight:700;font-size:1.2rem}
+.feature p{color:var(--muted);font-size:1rem;line-height:1.6}
+
+/* FOOTER */
+.footer{background:var(--glass-bg);border-top:1px solid var(--glass-border);padding:3rem 0 2rem;margin-top:4rem}
+.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;align-items:start}
+.footer-brand{display:flex;flex-direction:column;gap:1rem}
+.footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.footer-logo-text{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-desc{color:var(--muted);line-height:1.6;max-width:400px}
+.footer-links{display:flex;flex-direction:column;gap:.8rem}
+.footer-links h4{font-size:1.1rem;margin-bottom:1rem;color:var(--text)}
+.footer-links a{color:var(--muted);text-decoration:none;transition:all var(--transition);display:flex;align-items:center;gap:.5rem}
+.footer-links a:hover{color:var(--primary);transform:translateX(5px)}
+.social-links{display:flex;gap:1rem;margin-top:1rem}
+.social-links a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.05);color:var(--text);text-decoration:none;transition:all var(--transition)}
+.social-links a:hover{background:var(--primary);color:#021217;transform:translateY(-3px)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);margin-top:3rem;padding-top:2rem;text-align:center;color:var(--muted)}
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 16, 24, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 1100;
+  padding: 2rem;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.mobile-menu-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu-links a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-5px);
+}
+
+.mobile-lang-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-lang-group .lang-btn {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+/* POPUP */
+.popup{position:fixed;left:50%;top:20px;transform:translateX(-50%) translateY(-10px);padding:1rem 1.5rem;border-radius:12px;background:var(--primary);color:#021217;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.popup.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.popup.error{background:var(--accent);color:#fff}
+
+/* Responsive */
+@media (max-width:1200px){
+  .footer-content{grid-template-columns:1fr 1fr;gap:2rem}
+  .donation-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:900px){
+  .nav-links{display:none}
+  .mobile-toggle{display:block}
+  .lang-group{display:none}
+  .footer-content{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .nav-inner{padding:.8rem 1rem}
+  .container{padding:0 1.5rem}
+}
+
+@media (max-width:768px){
+  .hero{padding:6rem 0 2rem}
+  .hero h1{font-size:1.8rem}
+  .cta{flex-direction:column;width:100%}
+  .btn{width:100%;justify-content:center}
+  .footer-content{gap:2rem}
+  .footer{padding:2rem 0}
+  .hero .glass{padding:2rem 1.5rem !important}
+  .features{grid-template-columns:1fr}
+}
+
+@media (max-width:480px){
+  .hero h1{font-size:1.6rem}
+  .container{padding:0 1rem}
+  .hero .glass{padding:2rem 1rem !important}
+  .mobile-menu{padding:1.5rem}
+  .mobile-menu-links a{font-size:1.1rem;padding:.8rem}
+  .donation-card{padding:1.5rem}
+  .feature{padding:1.5rem 1rem}
+}
+</style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner glass container" role="navigation" aria-label="Main">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">RD</div>
+        <div class="site-title" data-translate="site_title">Rebeldevx</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="nav-links" role="menubar" id="mainNav">
+          <a href="index.html" role="menuitem"><i class="fas fa-home"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+          <a href="docs.html" role="menuitem"><i class="fas fa-book"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html" role="menuitem"><i class="fas fa-heart"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+
+        <div class="lang-group" role="group" aria-label="Language">
+          <button class="lang-btn active" data-lang="fa">FA</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+        </div>
+
+        <button class="mobile-toggle" id="mobileToggle" aria-label="منو" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="brand">
+        <div class="logo">RD</div>
+        <div class="site-title" data-translate="site_title">Rebeldevx</div>
+      </div>
+      <button class="mobile-toggle" id="mobileClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-menu-links">
+      <a href="index.html"><i class="fas fa-home"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+      <a href="docs.html"><i class="fas fa-book"></i> <span data-translate="nav_docs">مستندات</span></a>
+      <a href="donation.html"><i class="fas fa-heart"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+    </div>
+
+    <div class="mobile-lang-group" role="group" aria-label="Language Mobile">
+      <button class="lang-btn active" data-lang="fa">فارسی</button>
+      <button class="lang-btn" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ru">Русский</button>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="container">
+      <div class="glass" style="padding:3rem 2rem;max-width:1000px;margin:0 auto;border-radius:20px">
+        <h1 data-translate="donation_hero_title">حمایت از Rebeldevx</h1>
+        <p data-translate="donation_hero_sub">با حمایت مالی شما، می‌توانیم خدمات بهتری ارائه دهیم و سرورهای قدرتمندتری برای سرویس VPN فراهم کنیم</p>
+        <div class="cta">
+          <a class="btn primary" href="#crypto"><i class="fas fa-coins"></i> <span data-translate="donate_crypto">حمایت با ارز دیجیتال</span></a>
+          <a class="btn ghost" href="index.html"><i class="fas fa-arrow-right"></i> <span data-translate="back_to_home">بازگشت به صفحه اصلی</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <div class="title-center" data-translate="why_donate">چرا از Rebeldevx حمایت کنیم؟</div>
+      <div class="features">
+        <div class="feature glass">
+          <i class="fas fa-server"></i>
+          <h4 data-translate="feature_servers">سرورهای قدرتمند</h4>
+          <p data-translate="feature_servers_desc">ارائه سرورهای پرسرعت و پایدار برای اتصال بهتر</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-sync"></i>
+          <h4 data-translate="feature_updates">بروزرسانی مستمر</h4>
+          <p data-translate="feature_updates_desc">آپدیت خودکار کانفیگ‌ها و رفع مشکلات فنی</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-shield-alt"></i>
+          <h4 data-translate="feature_security">امنیت بالا</h4>
+          <p data-translate="feature_security_desc">تضمین امنیت و حریم خصوصی کاربران</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-headset"></i>
+          <h4 data-translate="feature_support">پشتیبانی ۲۴/۷</h4>
+          <p data-translate="feature_support_desc">پشتیبانی فنی دائمی و پاسخگویی سریع</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRYPTO DONATIONS -->
+  <section id="crypto" class="section">
+    <div class="container">
+      <div class="title-center" data-translate="crypto_donations">حمایت با ارزهای دیجیتال</div>
+      
+      <div class="donation-grid">
+        
+        <!-- Bitcoin -->
+        <div class="donation-card glass">
+          <i class="fab fa-bitcoin donation-icon"></i>
+          <h3 data-translate="bitcoin">Bitcoin (BTC)</h3>
+          <p data-translate="bitcoin_desc">شبکه اصلی Bitcoin</p>
+          <div class="address-box">
+            <div class="address-text">bc1q3r79a2t3tuada56zv722ykrwjadgsh79m5pthz</div>
+            <button class="copy-btn" data-address="bc1q3r79a2t3tuada56zv722ykrwjadgsh79m5pthz">
+              <i class="fas fa-copy"></i> <span data-translate="copy_address">کپی آدرس</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ethereum / USDT -->
+        <div class="donation-card glass">
+          <i class="fab fa-ethereum donation-icon"></i>
+          <h3 data-translate="ethereum">Ethereum (ETH) / USDT</h3>
+          <p data-translate="ethereum_desc">شبکه ERC-20</p>
+          <div class="address-box">
+            <div class="address-text">0x66D74F4b7527ea9eD5BA5e2E02fa93fB7a90325d</div>
+            <button class="copy-btn" data-address="0x66D74F4b7527ea9eD5BA5e2E02fa93fB7a90325d">
+              <i class="fas fa-copy"></i> <span data-translate="copy_address">کپی آدرس</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Solana -->
+        <div class="donation-card glass">
+          <i class="fas fa-coins donation-icon"></i>
+          <h3 data-translate="solana">Solana (SOL)</h3>
+          <p data-translate="solana_desc">شبکه Solana</p>
+          <div class="address-box">
+            <div class="address-text">9irdHFdeWVb6cnu8HTdKAs3Lg1PD8HiQQLhVHLSAQq6X</div>
+            <button class="copy-btn" data-address="9irdHFdeWVb6cnu8HTdKAs3Lg1PD8HiQQLhVHLSAQq6X">
+              <i class="fas fa-copy"></i> <span data-translate="copy_address">کپی آدرس</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPORTANT NOTES -->
+  <section class="section">
+    <div class="container">
+      <div class="title-center" data-translate="important_notes">نکات مهم</div>
+      <div class="features">
+        <div class="feature glass">
+          <i class="fas fa-check-circle"></i>
+          <h4 data-translate="note_network">توجه به شبکه</h4>
+          <p data-translate="note_network_desc">لطفاً هنگام ارسال، از صحت شبکه (Network) اطمینان حاصل کنید</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-check-circle"></i>
+          <h4 data-translate="note_verify">تأیید آدرس</h4>
+          <p data-translate="note_verify_desc">همیشه آدرس را قبل از ارسال دوباره بررسی کنید</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-check-circle"></i>
+          <h4 data-translate="note_support">پشتیبانی</h4>
+          <p data-translate="note_support_desc">در صورت هرگونه مشکل با پشتیبانی تماس بگیرید</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THANK YOU -->
+  <section class="section">
+    <div class="container">
+      <div class="glass" style="padding:3rem;text-align:center;max-width:800px;margin:0 auto">
+        <i class="fas fa-heart" style="font-size:4rem;color:var(--accent);margin-bottom:2rem"></i>
+        <h2 data-translate="thank_you_title">از حمایت شما سپاسگزاریم! ❤️</h2>
+        <p data-translate="thank_you_desc" style="color:var(--muted);font-size:1.1rem;line-height:1.6;margin-top:1rem">
+          با کمک‌های مالی شما، می‌توانیم خدمات Rebeldevx را بهبود بخشیده و تجربه بهتری برای همه کاربران فراهم کنیم. هر مقدار کمک، ارزشمند است!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo" style="width:50px;height:50px">RD</div>
+            <div class="footer-logo-text" data-translate="site_title">Rebeldevx</div>
+          </div>
+          <p class="footer-desc" data-translate="footer_desc">
+            پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.
+          </p>
+          <div class="social-links">
+            <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener" aria-label="Telegram">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://github.com/Arianlavi" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="quick_links">لینک‌های سریع</h4>
+          <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="resources">منابع</h4>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="documentation">مستندات</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="guide">راهنما</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="tutorials">آموزش‌ها</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="support">پشتیبانی</h4>
+          <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener"><i class="fas fa-arrow-left"></i> <span data-translate="telegram">تلگرام</span></a>
+          <a href="#"><i class="fas fa-arrow-left"></i> <span data-translate="report_issue">گزارش مشکل</span></a>
+          <a href="donation.html"><i class="fas fa-arrow-left"></i> <span data-translate="donate">حمایت</span></a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Rebeldevx. <span data-translate="all_rights_reserved">تمام حقوق محفوظ است</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="popup" class="popup" role="alert" aria-live="polite"></div>
+
+<script>
+
+const TRANSLATIONS = {
+  fa: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "صفحه اصلی",
+    nav_docs: "مستندات",
+    nav_donate: "حمایت مالی",
+    
+    // Hero Section
+    donation_hero_title: "حمایت از Rebeldevx",
+    donation_hero_sub: "با حمایت مالی شما، می‌توانیم خدمات بهتری ارائه دهیم و سرورهای قدرتمندتری برای سرویس VPN فراهم کنیم",
+    donate_crypto: "حمایت با ارز دیجیتال",
+    back_to_home: "بازگشت به صفحه اصلی",
+    
+    // Features
+    why_donate: "چرا از Rebeldevx حمایت کنیم؟",
+    feature_servers: "سرورهای قدرتمند",
+    feature_servers_desc: "ارائه سرورهای پرسرعت و پایدار برای اتصال بهتر",
+    feature_updates: "بروزرسانی مستمر",
+    feature_updates_desc: "آپدیت خودکار کانفیگ‌ها و رفع مشکلات فنی",
+    feature_security: "امنیت بالا",
+    feature_security_desc: "تضمین امنیت و حریم خصوصی کاربران",
+    feature_support: "پشتیبانی ۲۴/۷",
+    feature_support_desc: "پشتیبانی فنی دائمی و پاسخگویی سریع",
+    
+    // Crypto Donations
+    crypto_donations: "حمایت با ارزهای دیجیتال",
+    bitcoin: "Bitcoin (BTC)",
+    bitcoin_desc: "شبکه اصلی Bitcoin",
+    ethereum: "Ethereum (ETH) / USDT",
+    ethereum_desc: "شبکه ERC-20",
+    solana: "Solana (SOL)",
+    solana_desc: "شبکه Solana",
+    copy_address: "کپی آدرس",
+    
+    // Important Notes
+    important_notes: "نکات مهم",
+    note_network: "توجه به شبکه",
+    note_network_desc: "لطفاً هنگام ارسال، از صحت شبکه (Network) اطمینان حاصل کنید",
+    note_verify: "تأیید آدرس",
+    note_verify_desc: "همیشه آدرس را قبل از ارسال دوباره بررسی کنید",
+    note_support: "پشتیبانی",
+    note_support_desc: "در صورت هرگونه مشکل با پشتیبانی تماس بگیرید",
+    
+    // Thank You
+    thank_you_title: "از حمایت شما سپاسگزاریم! ❤️",
+    thank_you_desc: "با کمک‌های مالی شما، می‌توانیم خدمات Rebeldevx را بهبود بخشیده و تجربه بهتری برای همه کاربران فراهم کنیم. هر مقدار کمک، ارزشمند است!",
+    
+    // Footer
+    footer_desc: "پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.",
+    quick_links: "لینک‌های سریع",
+    resources: "منابع",
+    support: "پشتیبانی",
+    documentation: "مستندات",
+    guide: "راهنما",
+    tutorials: "آموزش‌ها",
+    telegram: "تلگرام",
+    report_issue: "گزارش مشکل",
+    donate: "حمایت",
+    all_rights_reserved: "تمام حقوق محفوظ است"
+  },
+  
+  en: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "Home",
+    nav_docs: "Documentation",
+    nav_donate: "Donate",
+    
+    // Hero Section
+    donation_hero_title: "Support Rebeldevx",
+    donation_hero_sub: "With your financial support, we can provide better services and more powerful servers for VPN service",
+    donate_crypto: "Donate with Cryptocurrency",
+    back_to_home: "Back to Home",
+    
+    // Features
+    why_donate: "Why Support Rebeldevx?",
+    feature_servers: "Powerful Servers",
+    feature_servers_desc: "Providing fast and stable servers for better connection",
+    feature_updates: "Continuous Updates",
+    feature_updates_desc: "Automatic config updates and technical issue fixes",
+    feature_security: "High Security",
+    feature_security_desc: "Guaranteeing user security and privacy",
+    feature_support: "24/7 Support",
+    feature_support_desc: "Continuous technical support and quick response",
+    
+    // Crypto Donations
+    crypto_donations: "Cryptocurrency Donations",
+    bitcoin: "Bitcoin (BTC)",
+    bitcoin_desc: "Bitcoin Main Network",
+    ethereum: "Ethereum (ETH) / USDT",
+    ethereum_desc: "ERC-20 Network",
+    solana: "Solana (SOL)",
+    solana_desc: "Solana Network",
+    copy_address: "Copy Address",
+    
+    // Important Notes
+    important_notes: "Important Notes",
+    note_network: "Network Attention",
+    note_network_desc: "Please ensure the correct network when sending",
+    note_verify: "Address Verification",
+    note_verify_desc: "Always double-check the address before sending",
+    note_support: "Support",
+    note_support_desc: "Contact support in case of any issues",
+    
+    // Thank You
+    thank_you_title: "Thank You for Your Support! ❤️",
+    thank_you_desc: "With your financial help, we can improve Rebeldevx services and provide a better experience for all users. Every contribution matters!",
+    
+    // Footer
+    footer_desc: "Leading platform providing VPN configs with direct links from reliable sources.",
+    quick_links: "Quick Links",
+    resources: "Resources",
+    support: "Support",
+    documentation: "Documentation",
+    guide: "Guide",
+    tutorials: "Tutorials",
+    telegram: "Telegram",
+    report_issue: "Report Issue",
+    donate: "Donate",
+    all_rights_reserved: "All rights reserved"
+  },
+  
+  ru: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "Главная",
+    nav_docs: "Документация",
+    nav_donate: "Поддержать",
+    
+    // Hero Section
+    donation_hero_title: "Поддержка Rebeldevx",
+    donation_hero_sub: "С вашей финансовой поддержкой мы можем предоставлять лучшие услуги и более мощные серверы для VPN",
+    donate_crypto: "Поддержать криптовалютой",
+    back_to_home: "Вернуться на главную",
+    
+    // Features
+    why_donate: "Почему стоит поддержать Rebeldevx?",
+    feature_servers: "Мощные серверы",
+    feature_servers_desc: "Предоставление быстрых и стабильных серверов для лучшего соединения",
+    feature_updates: "Постоянные обновления",
+    feature_updates_desc: "Автоматическое обновление конфигов и исправление технических проблем",
+    feature_security: "Высокая безопасность",
+    feature_security_desc: "Гарантия безопасности и конфиденциальности пользователей",
+    feature_support: "Поддержка 24/7",
+    feature_support_desc: "Постоянная техническая поддержка и быстрый ответ",
+    
+    // Crypto Donations
+    crypto_donations: "Криптовалютные пожертвования",
+    bitcoin: "Bitcoin (BTC)",
+    bitcoin_desc: "Основная сеть Bitcoin",
+    ethereum: "Ethereum (ETH) / USDT",
+    ethereum_desc: "Сеть ERC-20",
+    solana: "Solana (SOL)",
+    solana_desc: "Сеть Solana",
+    copy_address: "Копировать адрес",
+    
+    // Important Notes
+    important_notes: "Важные заметки",
+    note_network: "Внимание к сети",
+    note_network_desc: "Пожалуйста, убедитесь в правильности сети при отправке",
+    note_verify: "Проверка адреса",
+    note_verify_desc: "Всегда перепроверяйте адрес перед отправкой",
+    note_support: "Поддержка",
+    note_support_desc: "Свяжитесь с поддержкой в случае проблем",
+    
+    // Thank You
+    thank_you_title: "Спасибо за вашу поддержку! ❤️",
+    thank_you_desc: "С вашей финансовой помощью мы можем улучшить услуги Rebeldevx и обеспечить лучший опыт для всех пользователей. Каждый вклад важен!",
+    
+    // Footer
+    footer_desc: "Ведущая платформа с конфигами VPN и прямыми ссылками из надежных источников.",
+    quick_links: "Быстрые ссылки",
+    resources: "Ресурсы",
+    support: "Поддержка",
+    documentation: "Документация",
+    guide: "Руководство",
+    tutorials: "Обучение",
+    telegram: "Telegram",
+    report_issue: "Сообщить о проблеме",
+    donate: "Поддержать",
+    all_rights_reserved: "Все права защищены"
+  }
+};
+
+// سیستم ترجمه
+function applyTranslations(lang = 'fa') {
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
+      element.textContent = TRANSLATIONS[lang][key];
+    }
+  });
+  
+  // تغییر direction بر اساس زبان
+  if (lang === 'fa') {
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'fa';
+  } else if (lang === 'en') {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'en';
+  } else if (lang === 'ru') {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'ru';
+  }
+}
+
+// تنظیم event listener برای دکمه‌های زبان
+function setupLanguageSwitchers() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // حذف active از همه دکمه‌ها
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      
+      // اضافه کردن active به دکمه کلیک شده
+      btn.classList.add('active');
+      
+      // اعمال ترجمه
+      const lang = btn.getAttribute('data-lang');
+      applyTranslations(lang);
+      
+      // ذخیره زبان در localStorage
+      localStorage.setItem('selectedLanguage', lang);
+      
+      // بستن منوی موبایل اگر باز باشد
+      if (window.innerWidth <= 900) {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+}
+
+// سیستم کپی آدرس
+function setupCopyButtons() {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const address = btn.getAttribute('data-address');
+      
+      try {
+        await navigator.clipboard.writeText(address);
+        
+        // تغییر استایل دکمه
+        btn.innerHTML = '<i class="fas fa-check"></i> کپی شد!';
+        btn.classList.add('copied');
+        
+        // نمایش پاپ آپ
+        showPopup('آدرس با موفقیت کپی شد ✅', 'ok');
+        
+        // بازگشت به حالت اولیه بعد از 2 ثانیه
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fas fa-copy"></i> کپی آدرس';
+          btn.classList.remove('copied');
+        }, 2000);
+        
+      } catch (err) {
+        // روش fallback برای مرورگرهای قدیمی
+        const textArea = document.createElement('textarea');
+        textArea.value = address;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showPopup('آدرس با موفقیت کپی شد ✅', 'ok');
+        } catch (err) {
+          showPopup('خطا در کپی آدرس', 'error');
+        }
+        document.body.removeChild(textArea);
+      }
+    });
+  });
+}
+
+// نمایش پاپ آپ
+function showPopup(msg, type = 'ok', time = 2500) {
+  const popup = document.getElementById('popup');
+  popup.textContent = msg;
+  popup.className = 'popup show' + (type === 'error' ? ' error' : '');
+  popup.setAttribute('aria-live', 'assertive');
+  
+  setTimeout(() => {
+    popup.className = 'popup';
+    popup.setAttribute('aria-live', 'off');
+  }, time);
+}
+
+// Mobile Menu
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileClose = document.getElementById('mobileClose');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function setupMobileMenu() {
+  if (mobileToggle && mobileClose && mobileMenu) {
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Initialize application
+function initApp() {
+  // بارگیری زبان ذخیره شده یا استفاده از زبان پیش‌فرض
+  const savedLanguage = localStorage.getItem('selectedLanguage') || 'fa';
+  
+  // تنظیم active بر اساس زبان ذخیره شده
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.getAttribute('data-lang') === savedLanguage) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  
+  // اعمال ترجمه
+  applyTranslations(savedLanguage);
+  
+  // تنظیم event listenerهای زبان
+  setupLanguageSwitchers();
+  
+  // تنظیم دکمه‌های کپی
+  setupCopyButtons();
+  
+  // تنظیم منوی موبایل
+  setupMobileMenu();
+  
+  console.log('Donation page initialized with language:', savedLanguage);
+}
+
+// شروع اپلیکیشن وقتی DOM آماده است
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>

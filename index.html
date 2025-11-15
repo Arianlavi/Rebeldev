@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rebeldevx — VPN Configs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg-1:#071018;
+  --bg-2:#041018;
+  --primary:#6CD0B3;
+  --accent:#FF6B6B;
+  --text:#EDF2F7;
+  --muted:#9AA8B0;
+  --glass-bg: rgba(8,12,16,0.45);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-blur: 25px;
+  --radius:16px;
+  --shadow: 0 25px 60px rgba(0,0,0,0.65);
+  --max-width:1400px;
+  --transition: .35s cubic-bezier(.2,.9,.2,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;padding:0;background:
+  radial-gradient(circle at 10% 10%, var(--bg-1) 0%, var(--bg-2) 30%, #01060b 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(var(--glass-blur));z-index:-1;pointer-events:none}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 1.5rem}
+.glass{
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+/* NAV */
+.navbar{position:fixed;left:0;right:0;top:16px;padding:.5rem;z-index:1200;display:flex;justify-content:center}
+.nav-inner{width:100%;max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.5rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{
+  width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary), #9DE6CD);display:flex;align-items:center;justify-content:center;color:#031617;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,0.5)
+}
+.site-title{font-weight:800;font-size:1.2rem;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:.8rem;align-items:center}
+.nav-links a{padding:.6rem 1rem;border-radius:12px;color:var(--text);text-decoration:none;display:inline-flex;gap:.6rem;align-items:center;transition:all var(--transition)}
+.nav-links a:hover{background:rgba(255,255,255,0.05);transform:translateY(-2px)}
+.mobile-toggle{display:none;background:transparent;border:0;color:var(--text);font-size:1.25rem;cursor:pointer;padding:.5rem}
+
+/* Language - Desktop */
+.lang-group{display:flex;gap:.5rem;align-items:center}
+.lang-btn{padding:.4rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);font-weight:600;transition:all var(--transition);cursor:pointer}
+.lang-btn.active{background:var(--primary);color:#021217;border-color:transparent}
+.lang-btn:hover{background:rgba(255,255,255,0.05)}
+
+/* HERO */
+.hero{padding:8rem 0 3rem;text-align:center}
+.hero .container{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.hero h1{font-size:3rem;margin:0;font-weight:800;background:linear-gradient(135deg, var(--text), var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);max-width:900px;font-size:1.1rem;line-height:1.6}
+.cta{display:flex;gap:1rem;margin-top:1.5rem;justify-content:center}
+.btn{padding:.9rem 1.8rem;border-radius:14px;font-weight:700;display:inline-flex;gap:.8rem;align-items:center;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none;font-family:inherit;font-size:1rem}
+.btn.primary{background:var(--primary);color:#021217;box-shadow:0 8px 30px rgba(108,208,179,0.3)}
+.btn.ghost{border:1px solid rgba(255,255,255,0.08);color:var(--text);background:rgba(255,255,255,0.03)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,0.4)}
+.btn:active{transform:translateY(-1px)}
+
+/* SECTIONS */
+.section{padding:3rem 0}
+.title-center{text-align:center;margin-bottom:2rem;font-size:1.8rem;font-weight:700}
+
+/* FEATURES */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.feature{padding:2rem 1.5rem;border-radius:16px;text-align:center;transition:all var(--transition)}
+.feature:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.feature i{font-size:2.5rem;color:var(--primary);display:block;margin-bottom:1rem}
+.feature h4{margin:.5rem 0;font-weight:700;font-size:1.2rem}
+.feature p{color:var(--muted);font-size:1rem;line-height:1.6}
+
+/* CONFIGS GRID */
+.configs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.config-card{padding:1.5rem;border-radius:16px;display:flex;flex-direction:column;gap:1rem;min-height:180px;transition:all var(--transition)}
+.config-card:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.config-card .meta{display:flex;justify-content:space-between;align-items:center}
+.config-card .meta .name{font-weight:800;font-size:1.1rem}
+.config-card .actions{display:flex;gap:.8rem;align-items:center}
+.config-list{margin-top:.8rem;max-height:200px;overflow:auto;padding:1rem;border-radius:12px;background:rgba(255,255,255,0.03);font-family:monospace;font-size:.9rem;color:var(--muted)}
+.config-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.5rem .8rem;border-radius:10px;transition:all var(--transition)}
+.config-item:hover{background:rgba(255,255,255,0.02)}
+.copy-btn{padding:.4rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;cursor:pointer;transition:all var(--transition)}
+.copy-btn:hover{background:rgba(255,255,255,0.08);transform:scale(1.05)}
+
+/* FOOTER */
+.footer{background:var(--glass-bg);border-top:1px solid var(--glass-border);padding:3rem 0 2rem;margin-top:4rem}
+.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;align-items:start}
+.footer-brand{display:flex;flex-direction:column;gap:1rem}
+.footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.footer-logo-text{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-desc{color:var(--muted);line-height:1.6;max-width:400px}
+.footer-links{display:flex;flex-direction:column;gap:.8rem}
+.footer-links h4{font-size:1.1rem;margin-bottom:1rem;color:var(--text)}
+.footer-links a{color:var(--muted);text-decoration:none;transition:all var(--transition);display:flex;align-items:center;gap:.5rem}
+.footer-links a:hover{color:var(--primary);transform:translateX(5px)}
+.social-links{display:flex;gap:1rem;margin-top:1rem}
+.social-links a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.05);color:var(--text);text-decoration:none;transition:all var(--transition)}
+.social-links a:hover{background:var(--primary);color:#021217;transform:translateY(-3px)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);margin-top:3rem;padding-top:2rem;text-align:center;color:var(--muted)}
+
+/* POPUP */
+.popup{position:fixed;left:50%;top:20px;transform:translateX(-50%) translateY(-10px);padding:1rem 1.5rem;border-radius:12px;background:var(--primary);color:#021217;opacity:0;pointer-events:none;transition:all .35s;z-index:9999;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.popup.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.popup.error{background:var(--accent);color:#fff}
+
+/* LOADING STATES */
+.loading-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.skeleton-loading {
+  background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 6px;
+  height: 18px;
+  margin: 3px 0;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* STATS SECTION */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin:2rem 0}
+.stat-card{padding:2rem;border-radius:16px;text-align:center;transition:all var(--transition)}
+.stat-card:hover{transform:translateY(-3px)}
+.stat-number{font-size:2.5rem;font-weight:800;color:var(--primary);display:block;margin-bottom:.5rem}
+.stat-label{color:var(--muted);font-size:.9rem}
+
+/* ENHANCED METRICS */
+.enhanced-metrics{background:var(--glass-bg);padding:1.5rem;border-radius:12px;margin:1rem 0}
+.enhanced-metrics h4{margin-bottom:1rem;color:var(--text)}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+.metric-item{text-align:center}
+.metric-value{font-size:1.5rem;font-weight:bold;color:var(--primary)}
+.metric-label{font-size:0.8rem;color:var(--muted)}
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 16, 24, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 1100;
+  padding: 2rem;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.mobile-menu-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu-links a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-5px);
+}
+
+.mobile-lang-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-lang-group .lang-btn {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width:1200px){
+  .footer-content{grid-template-columns:1fr 1fr;gap:2rem}
+  .configs{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+}
+
+@media (max-width:900px){
+  .nav-links{display:none}
+  .mobile-toggle{display:block}
+  .lang-group{display:none}
+  .footer-content{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .nav-inner{padding:.8rem 1rem}
+  .container{padding:0 1.5rem}
+}
+
+@media (max-width:768px){
+  .configs{grid-template-columns:1fr;gap:1rem}
+  .config-card{padding:1.2rem}
+  .hero{padding:6rem 0 2rem}
+  .hero h1{font-size:1.8rem}
+  .cta{flex-direction:column;width:100%}
+  .btn{width:100%;justify-content:center}
+  .features{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .footer-content{gap:2rem}
+  .footer{padding:2rem 0}
+  .hero .glass{padding:2rem 1.5rem !important}
+}
+
+@media (max-width:480px){
+  .hero h1{font-size:1.6rem}
+  .stats{grid-template-columns:1fr}
+  .footer-content{gap:1.5rem}
+  .container{padding:0 1rem}
+  .hero .glass{padding:2rem 1rem !important}
+  .feature{padding:1.5rem 1rem}
+  .footer-logo{flex-direction:column;text-align:center;gap:.5rem}
+  .mobile-menu{padding:1.5rem}
+  .mobile-menu-links a{font-size:1.1rem;padding:.8rem}
+}
+</style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner glass container" role="navigation" aria-label="Main">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">RD</div>
+        <div class="site-title">Rebeldevx</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="nav-links" role="menubar" id="mainNav">
+          <a href="#configs" role="menuitem"><i class="fas fa-database"></i> <span data-translate="nav_configs">کانفیگ‌ها</span></a>
+          <a href="#features" role="menuitem"><i class="fas fa-star"></i> <span data-translate="nav_features">ویژگی‌ها</span></a>
+          <a href="docs.html" role="menuitem"><i class="fas fa-book"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html" role="menuitem"><i class="fas fa-heart"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+
+        <div class="lang-group" role="group" aria-label="Language">
+          <button class="lang-btn active" data-lang="fa">FA</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+        </div>
+
+        <button class="mobile-toggle" id="mobileToggle" aria-label="منو" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="brand">
+        <div class="logo">RD</div>
+        <div class="site-title">Rebeldevx</div>
+      </div>
+      <button class="mobile-toggle" id="mobileClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-menu-links">
+      <a href="#configs" data-translate="nav_configs"><i class="fas fa-database"></i> کانفیگ‌ها</a>
+      <a href="#features" data-translate="nav_features"><i class="fas fa-star"></i> ویژگی‌ها</a>
+      <a href="docs.html" data-translate="nav_docs"><i class="fas fa-book"></i> مستندات</a>
+      <a href="donation.html" data-translate="nav_donate"><i class="fas fa-heart"></i> حمایت مالی</a>
+    </div>
+
+    <div class="mobile-lang-group" role="group" aria-label="Language Mobile">
+      <button class="lang-btn active" data-lang="fa">فارسی</button>
+      <button class="lang-btn" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ru">Русский</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="glass" style="padding:3rem 2rem;max-width:1000px;margin:0 auto;border-radius:20px">
+        <h1 data-translate="hero_title">Rebeldevx VPN — امن، سریع، بدون محدودیت</h1>
+        <p data-translate="hero_sub">کانفیگ‌ های واقعی و به‌ روز برای VLESS / VMESS / Shadowsocks / trojan. دانلود مستقیم از منابع معتبر.</p>
+        <div class="cta">
+          <a class="btn primary" href="#configs"><i class="fas fa-download"></i> <span data-translate="cta_get">دریافت کانفیگ‌ ها</span></a>
+          <button class="btn ghost" id="refreshAllBtn"><i class="fas fa-sync-alt"></i> <span data-translate="refresh_now">بروزرسانی اکنون</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        <div class="stat-card glass">
+          <span class="stat-number" id="totalConfigs">0</span>
+          <span class="stat-label" data-translate="active_configs">کانفیگ فعال</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-number">۴+</span>
+          <span class="stat-label" data-translate="supported_protocols">پروتکل پشتیبانی</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-number">۲۴/۷</span>
+          <span class="stat-label" data-translate="support_24_7">پشتیبانی دائمی</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-number">۱۰۰%</span>
+          <span class="stat-label" data-translate="free">رایگان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENHANCED METRICS -->
+  <section class="section">
+    <div class="container">
+      <div id="enhancedMetrics" class="enhanced-metrics glass">
+        <h4>📊 Enhanced Performance Metrics</h4>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-value" id="validConfigs">0</div>
+            <div class="metric-label">Valid Configs</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-value" id="avgLatency">0ms</div>
+            <div class="metric-label">Avg Latency</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-value" id="successRate">0%</div>
+            <div class="metric-label">Success Rate</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-value" id="avgScore">0</div>
+            <div class="metric-label">Avg Score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="title-center"> <span class="title-center" data-translate="feat_title">ویژگی‌ های برجسته</span></div>
+      <div class="features">
+        <div class="feature glass">
+          <i class="fas fa-shield-alt"></i>
+          <h4 data-translate="feat_security">امنیت سطح بالا</h4>
+          <p data-translate="feat_security_desc">پشتیبانی از پروتکل‌ های امن و رمزنگاری پیشرفته با بالاترین سطح امنیتی.</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-bolt"></i>
+          <h4 data-translate="feat_speed">سرعت بالا</h4>
+          <p data-translate="feat_speed_desc">سرورهای بهینه و کانفیگ‌ های پرسرعت با پینگ پایین و پایداری عالی.</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-globe"></i>
+          <h4 data-translate="feat_global">دسترسی جهانی</h4>
+          <p data-translate="feat_global_desc">کانفیگ‌ ها از منابع سرتاسر دنیا با دسترسی به تمامی مناطق جغرافیایی.</p>
+        </div>
+        <div class="feature glass">
+          <i class="fas fa-sync"></i>
+          <h4 data-translate="feat_auto">بروزرسانی خودکار</h4>
+          <p data-translate="feat_auto_desc">کانفیگ ‌ها به‌صورت دوره‌ای بروزرسانی می‌ شوند. همیشه به‌ روز باشید.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIGS -->
+  <section id="configs" class="section">
+    <div class="container">
+      <div class="title-center"><span data-translate="configs_title">کانفیگ‌ ها</span></div>
+
+      <div class="configs" id="configsGrid">
+      </div>
+
+      <div style="margin-top:2rem;text-align:center;color:var(--muted)" id="refreshNote">
+        <i class="fas fa-info-circle"></i> <span data-translate="refresh_note">منبع: سورس‌ های معتبر - بروزرسانی خودکار هر ۱ ساعت</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="about">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo" style="width:50px;height:50px">RD</div>
+            <div class="footer-logo-text">Rebeldevx</div>
+          </div>
+          <p class="footer-desc" data-translate="about_text">
+            پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.
+          </p>
+          <div class="social-links">
+            <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener" aria-label="Telegram">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://github.com/arianlavi" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="footer_links">لینک‌ها</h4>
+          <a href="#configs"><i class="fas fa-arrow-left"></i> <span data-translate="nav_configs">کانفیگ‌ ها</span></a>
+          <a href="#features"><i class="fas fa-arrow-left"></i> <span data-translate="nav_features">ویژگی ‌ها</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="resources">منابع</h4>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="documentation">مستندات</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="guide">راهنما</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="tutorials">آموزش‌ها</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="support">پشتیبانی</h4>
+          <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener"><i class="fas fa-arrow-left"></i> <span data-translate="telegram">تلگرام</span></a>
+          <a href="#"><i class="fas fa-arrow-left"></i> <span data-translate="report_issue">گزارش مشکل</span></a>
+          <a href="#"><i class="fas fa-arrow-left"></i> <span data-translate="faq">سوالات متداول</span></a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Rebeldevx. <span data-translate="all_rights_reserved">تمام حقوق محفوظ است</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="popup" class="popup" role="alert" aria-live="polite"></div>
+
+<script>
+
+const CORS_PROXIES = [
+  'https://api.allorigins.win/raw?url=',
+  'https://corsproxy.io/?',
+  'https://proxy.cors.sh/',
+  '' 
+];
+
+
+const CONFIG_SOURCES = {
+  vless: [
+    'https://raw.githubusercontent.com/Arianlavi/Rebeldev/refs/heads/main/RebelLink/vless_subscriptions.txt',
+
+  ],
+  vmess: [
+    'https://raw.githubusercontent.com/Arianlavi/Rebeldev/refs/heads/main/RebelLink/vmess_subscriptions.txt',
+
+  ],
+  shadowsocks: [
+    'https://raw.githubusercontent.com/Arianlavi/Rebeldev/refs/heads/main/RebelLink/ss_subscriptions.txt',
+
+  ],
+  trojan: [
+    'https://raw.githubusercontent.com/Arianlavi/Rebeldev/refs/heads/main/RebelLink/trojan_subscriptions.txt',
+
+  ]
+};
+
+/* ---------- Utility Functions ---------- */
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function el(tag, props = {}, ...children) {
+  const e = document.createElement(tag);
+  Object.entries(props).forEach(([k, v]) => {
+    if (k === 'class') e.className = v;
+    else if (k === 'html') e.innerHTML = v;
+    else e.setAttribute(k, String(v));
+  });
+  children.flat().forEach(c => { 
+    if (c == null) return; 
+    e.append(typeof c === 'string' ? document.createTextNode(c) : c); 
+  });
+  return e;
+}
+
+/* ---------- Popup Management ---------- */
+function showPopup(msg, type = 'ok', time = 2500) {
+  const popup = document.getElementById('popup');
+  popup.textContent = msg;
+  popup.className = 'popup show' + (type === 'error' ? ' error' : '');
+  popup.setAttribute('aria-live', 'assertive');
+  
+  setTimeout(() => {
+    popup.className = 'popup';
+    popup.setAttribute('aria-live', 'off');
+  }, time);
+}
+
+/* ---------- Translation System ---------- */
+const TRANSLATIONS = {
+  fa: {
+    nav_configs: 'کانفیگ‌ ها', 
+    nav_features: 'ویژگی‌ ها', 
+    nav_docs: 'مستندات',
+    nav_donate: 'حمایت مالی',
+    hero_title: 'Rebeldevx VPN — امن، سریع، بدون محدودیت',
+    hero_sub: 'کانفیگ‌های واقعی و به‌روز برای VLESS / VMESS / Shadowsocks / trojan. دانلود مستقیم از منابع معتبر.',
+    cta_get: 'دریافت کانفیگ‌ ها',
+    refresh_now: 'بروزرسانی اکنون',
+    feat_title: 'ویژگی‌ های برجسته',
+    feat_security: 'امنیت سطح بالا', 
+    feat_security_desc: 'پشتیبانی از پروتکل‌ های امن و رمزنگاری پیشرفته با بالاترین سطح امنیتی.',
+    feat_speed: 'سرعت بالا', 
+    feat_speed_desc: 'سرورهای بهینه و کانفیگ‌ های پرسرعت با پینگ پایین و پایداری عالی.',
+    feat_global: 'دسترسی جهانی', 
+    feat_global_desc: 'کانفیگ‌ ها از منابع سرتاسر دنیا با دسترسی به تمامی مناطق جغرافیایی.',
+    feat_auto: 'بروزرسانی خودکار', 
+    feat_auto_desc: 'کانفیگ‌ ها به‌صورت دوره‌ای بروزرسانی می‌ شوند. همیشه به‌ روز باشید.',
+    configs_title: 'کانفیگ‌ ها',
+    active_configs: 'کانفیگ فعال',
+    supported_protocols: 'پروتکل پشتیبانی',
+    support_24_7: 'پشتیبانی دائمی',
+    free: 'رایگان',
+    refresh_note: 'منبع: سورس‌ های معتبر - بروزرسانی خودکار هر ۱ ساعت',
+    about_text: 'پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.',
+    footer_links: 'لینک‌ ها', 
+    resources: 'منابع',
+    support: 'پشتیبانی',
+    documentation: 'مستندات',
+    guide: 'راهنما',
+    tutorials: 'آموزش‌ ها',
+    telegram: 'تلگرام',
+    report_issue: 'گزارش مشکل',
+    faq: 'سوالات متداول',
+    all_rights_reserved: 'تمام حقوق محفوظ است'
+  },
+  en: {
+    nav_configs: 'Configs', 
+    nav_features: 'Features', 
+    nav_docs: 'Documentation',
+    nav_donate: 'Donate',
+    hero_title: 'Rebeldevx VPN — secure, fast, unlimited',
+    hero_sub: 'Real, up-to-date configs for VLESS / VMESS / Shadowsocks / trojan. Direct downloads from reliable sources.',
+    cta_get: 'Get Configs',
+    refresh_now: 'Refresh Now',
+    feat_title: 'Highlights',
+    feat_security: 'High security', 
+    feat_security_desc: 'Supports secure protocols and modern encryption with highest security standards.',
+    feat_speed: 'Fast speed', 
+    feat_speed_desc: 'Optimized servers and fast configs with low ping and excellent stability.',
+    feat_global: 'Global access', 
+    feat_global_desc: 'Configs from reliable sources worldwide with access to all geographic regions.',
+    feat_auto: 'Auto Refresh', 
+    feat_auto_desc: 'Configs are periodically updated. Always stay updated.',
+    configs_title: 'Real Configs',
+    active_configs: 'Active Configs',
+    supported_protocols: 'Supported Protocols',
+    support_24_7: '24/7 Support',
+    free: 'Free',
+    refresh_note: 'Source: Reliable sources - Auto refresh every 1 hour',
+    about_text: 'Leading platform providing VPN configs with direct links from reliable sources.',
+    footer_links: 'Links',
+    resources: 'Resources',
+    support: 'Support',
+    documentation: 'Documentation',
+    guide: 'Guide',
+    tutorials: 'Tutorials',
+    telegram: 'Telegram',
+    report_issue: 'Report Issue',
+    faq: 'FAQ',
+    all_rights_reserved: 'All rights reserved'
+  },
+  ru: {
+    nav_configs: 'Конфиги', 
+    nav_features: 'Функции', 
+    nav_docs: 'Документация',
+    nav_donate: 'Поддержать',
+    hero_title: 'Rebeldevx VPN — безопасно, быстро, без ограничений',
+    hero_sub: 'Настоящие конфиги для VLESS / VMESS / Shadowsocks / trojan. Прямые загрузки с надежных источников.',
+    cta_get: 'Получить конфиги',
+    refresh_now: 'Обновить сейчас',
+    feat_title: 'Особенности',
+    feat_security: 'Высокая безопасность', 
+    feat_security_desc: 'Поддержка безопасных протоколов и шифрования с высочайшими стандартами безопасности.',
+    feat_speed: 'Высокая скорость', 
+    feat_speed_desc: 'Оптимизированные серверы и быстрые конфиги с низким пингом и отличной стабильностью.',
+    feat_global: 'Глобальный доступ', 
+    feat_global_desc: 'Конфиги из надежных источников по всему миру с доступом ко всем географическим регионам.',
+    feat_auto: 'Автообновление', 
+    feat_auto_desc: 'Конфиги периодически обновляются. Всегда будьте в курсе.',
+    configs_title: 'Настоящие конфиги',
+    active_configs: 'Активные конфиги',
+    supported_protocols: 'Поддерживаемые протоколы',
+    support_24_7: 'Поддержка 24/7',
+    free: 'Бесплатно',
+    refresh_note: 'Источник: Надежные источники - Автообновление каждый час',
+    about_text: 'Ведущая платформа с конфигами VPN и прямыми ссылками из надежных источников.',
+    footer_links: 'Ссылки',
+    resources: 'Ресурсы',
+    support: 'Поддержка',
+    documentation: 'Документация',
+    guide: 'Руководство',
+    tutorials: 'Обучение',
+    telegram: 'Telegram',
+    report_issue: 'Сообщить о проблеме',
+    faq: 'Частые вопросы',
+    all_rights_reserved: 'Все права защищены'
+  }
+};
+
+/* ---------- Language Management ---------- */
+function setupLanguageSwitchers() {
+  document.querySelectorAll('.lang-group .lang-btn, .mobile-lang-group .lang-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      document.querySelectorAll('.lang-group .lang-btn, .mobile-lang-group .lang-btn').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+      const lang = btn.dataset.lang;
+      applyTranslations(lang);
+      
+      if (window.innerWidth <= 900) {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+}
+
+function applyTranslations(lang = 'fa') {
+  document.querySelectorAll('[data-translate]').forEach(node => {
+    const key = node.getAttribute('data-translate');
+    if (!key) return;
+    if (TRANSLATIONS[lang][key]) {
+      node.textContent = TRANSLATIONS[lang][key];
+    }
+  });
+}
+
+/* ---------- Mobile Menu Management ---------- */
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileClose = document.getElementById('mobileClose');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function setupMobileMenu() {
+  if (mobileToggle && mobileClose && mobileMenu) {
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+}
+
+
+async function fetchWithCORSProxy(url, proxyIndex = 0) {
+  if (proxyIndex >= CORS_PROXIES.length) {
+    throw new Error('تمام proxyها شکست خوردند');
+  }
+
+  const proxy = CORS_PROXIES[proxyIndex];
+  const targetUrl = proxy + encodeURIComponent(url);
+  
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    console.log(`تلاش با proxy ${proxyIndex}: ${targetUrl}`);
+    
+    const response = await fetch(targetUrl, {
+      signal: controller.signal,
+      headers: {
+        'Accept': 'text/plain, application/json, */*',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const text = await response.text();
+    return text;
+    
+  } catch (error) {
+    console.warn(`Proxy ${proxyIndex} شکست خورد:`, error.message);
+    return fetchWithCORSProxy(url, proxyIndex + 1);
+  }
+}
+
+async function fetchConfigs(protocol) {
+  const sources = CONFIG_SOURCES[protocol] || [];
+  
+  for (let i = 0; i < sources.length; i++) {
+    try {
+      console.log(`تلاش برای دریافت ${protocol} از: ${sources[i]}`);
+      const text = await fetchWithCORSProxy(sources[i]);
+      
+      if (text && text.trim()) {
+        const lines = text.split('\n')
+          .map(line => line.trim())
+          .filter(line => 
+            line && 
+            !line.startsWith('#') && 
+            !line.startsWith('//') &&
+            line.length > 10
+          );
+        
+        if (lines.length > 0) {
+          console.log(`موفق! ${lines.length} کانفیگ برای ${protocol} یافت شد`);
+          return lines.slice(0, 20); 
+        }
+      }
+    } catch (error) {
+      console.warn(`منبع ${i} برای ${protocol} شکست خورد:`, error.message);
+
+    }
+  }
+  
+  throw new Error(`هیچ کانفیگی برای ${protocol} یافت نشد`);
+}
+
+/* ---------- Enhanced Metrics Display ---------- */
+function displayEnhancedMetrics() {
+  // تلاش برای بارگیری و نمایش گزارش عملکرد
+  fetch('./RebelLink/performance_report.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Performance report not found');
+      return response.json();
+    })
+    .then(report => {
+      document.getElementById('validConfigs').textContent = report.performance_metrics.valid_configurations_found;
+      document.getElementById('avgLatency').textContent = report.performance_metrics.average_latency_ms + 'ms';
+      document.getElementById('successRate').textContent = report.performance_metrics.success_rate + '%';
+      document.getElementById('avgScore').textContent = report.performance_metrics.average_performance_score.toFixed(2);
+    })
+    .catch(error => {
+      console.log('Performance report not available yet');
+      // نمایش مقادیر پیش فرض
+      document.getElementById('enhancedMetrics').style.display = 'none';
+    });
+}
+
+/* ---------- Config Card Management ---------- */
+function buildConfigCard({ key, label }) {
+  const card = el('div', { class: 'config-card glass' });
+  const meta = el('div', { class: 'meta' },
+    el('div', { class: 'name' }, label),
+    el('div', { class: 'actions' },
+      el('button', { class: 'btn ghost', 'data-key': key }, 
+        el('i', { class: 'fas fa-sync-alt' }), ' Refresh')
+    )
+  );
+  
+  const list = el('div', { class: 'config-list', id: `${key}-list` });
+  
+  for (let i = 0; i < 3; i++) {
+    list.appendChild(el('div', { class: 'skeleton-loading' }));
+  }
+  
+  card.append(meta, list);
+  
+  const refreshBtn = meta.querySelector('button');
+  refreshBtn.addEventListener('click', 
+    debounce(() => loadOne(key, list), 300)
+  );
+  
+  return card;
+}
+
+function renderCards() {
+  const grid = document.getElementById('configsGrid');
+  grid.innerHTML = '';
+  const map = [
+    { key: 'vless', label: 'VLESS Configs' },
+    { key: 'vmess', label: 'VMESS Configs' },
+    { key: 'shadowsocks', label: 'Shadowsocks Configs' },
+    { key: 'trojan', label: 'trojan Configs' }
+  ];
+  map.forEach(cfg => grid.appendChild(buildConfigCard(cfg)));
+}
+
+/* ---------- Load and Display Configs ---------- */
+let totalConfigCount = 0;
+
+async function loadOne(key, targetEl) {
+  const refreshBtn = document.querySelector(`button[data-key="${key}"]`);
+  const originalContent = refreshBtn.innerHTML;
+  
+  try {
+    refreshBtn.innerHTML = '<div class="loading-spinner"></div> Loading...';
+    refreshBtn.disabled = true;
+    
+    const configs = await fetchConfigs(key);
+    
+    if (!configs.length) {
+      targetEl.innerHTML = '<div style="color:var(--muted);text-align:center;padding:2rem"><i class="fas fa-exclamation-triangle"></i><br>هیچ کانفیگی یافت نشد</div>';
+      refreshBtn.innerHTML = originalContent;
+      refreshBtn.disabled = false;
+      return;
+    }
+    
+    targetEl.innerHTML = '';
+    
+    configs.forEach((config, index) => {
+      const row = el('div', { class: 'config-item' });
+      const configNumber = el('span', { 
+        style: 'color:var(--primary);font-weight:bold;min-width:20px;font-size:0.8rem;' 
+      }, `${index + 1}.`);
+      
+      const displayText = config.length > 60 ? config.substring(0, 60) + '...' : config;
+      const txt = el('div', { 
+        style: 'word-break: break-all; flex: 1; font-size: 0.75rem; font-family: monospace; cursor: pointer;',
+        title: 'کلیک برای کپی'
+      }, displayText);
+      
+      const copyBtn = el('button', { 
+        class: 'copy-btn', 
+        title: 'Copy config',
+        'aria-label': 'Copy config'
+      }, el('i', { class: 'fas fa-copy' }));
+      
+
+      txt.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(config);
+          showPopup('کانفیگ کپی شد ✅');
+        } catch (e) {
+          const ta = document.createElement('textarea');
+          ta.value = config;
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+            showPopup('کانفیگ کپی شد ✅');
+          } finally {
+            ta.remove();
+          }
+        }
+      });
+      
+
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(config);
+          showPopup('کانفیگ کپی شد ✅');
+        } catch (e) {
+          const ta = document.createElement('textarea');
+          ta.value = config;
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand('copy');
+            showPopup('کانفیگ کپی شد ✅');
+          } finally {
+            ta.remove();
+          }
+        }
+      });
+      
+      row.append(configNumber, txt, copyBtn);
+      targetEl.appendChild(row);
+    });
+    
+
+    totalConfigCount += configs.length;
+    document.getElementById('totalConfigs').textContent = totalConfigCount.toLocaleString();
+    
+    if (configs.length > 10) {
+      targetEl.append(el('div', {
+        html: `<div style="color:var(--muted);text-align:center;margin-top:1rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <i class="fas fa-info-circle"></i> 
+          ${configs.length} کانفیگ یافت شد
+        </div>`
+      }));
+    }
+    
+  } catch (err) {
+    console.error('خطا در دریافت کانفیگ‌ ها:', err);
+    targetEl.innerHTML = `<div style="color:var(--accent);text-align:center;padding:2rem">
+      <i class="fas fa-exclamation-triangle"></i><br>
+      خطا در اتصال به منابع<br>
+      <small style="color:var(--muted)">مشکل CORS - لطفاً بعدا تلاش کنید</small>
+      <div style="margin-top:1rem;">
+        <button class="btn ghost" onclick="loadOne('${key}', this.parentElement.parentElement)" style="font-size:0.8rem;">
+          <i class="fas fa-redo"></i> تلاش مجدد
+        </button>
+      </div>
+    </div>`;
+    showPopup('خطا در اتصال به منابع', 'error', 4000);
+  } finally {
+    refreshBtn.innerHTML = originalContent;
+    refreshBtn.disabled = false;
+  }
+}
+
+function loadAll() {
+  totalConfigCount = 0;
+  const keys = ['vless', 'vmess', 'shadowsocks', 'trojan'];
+  let loadedCount = 0;
+  
+  keys.forEach(k => {
+    const listEl = document.getElementById(`${k}-list`);
+    if (listEl) {
+      loadOne(k, listEl).finally(() => {
+        loadedCount++;
+        if (loadedCount === keys.length) {
+          console.log('همه کانفیگ‌ ها لود شدند');
+        }
+      });
+    }
+  });
+}
+
+/* ---------- Event Listeners ---------- */
+document.getElementById('refreshAllBtn').addEventListener('click', 
+  debounce(() => {
+    loadAll();
+    showPopup('در حال بروزرسانی همه کانفیگ‌ ها...');
+  }, 300)
+);
+
+/* ---------- Initialize Application ---------- */
+function initApp() {
+  renderCards();
+  setupLanguageSwitchers();
+  setupMobileMenu();
+  applyTranslations('fa');
+  
+  // نمایش متریک‌های پیشرفته
+  displayEnhancedMetrics();
+
+  setTimeout(() => {
+    loadAll();
+  }, 1000);
+  
+  const AUTO_REFRESH_MS = 3600000;
+  setInterval(() => {
+    loadAll();
+    console.log('Auto-refreshed configs');
+  }, AUTO_REFRESH_MS);
+}
+
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+
+if (!('dataset' in document.documentElement)) {
+  Object.defineProperty(HTMLElement.prototype, 'dataset', {
+    get: function() {
+      const obj = {};
+      Array.from(this.attributes).forEach(a => {
+        if (a.name.startsWith('data-')) obj[a.name.slice(5)] = a.value;
+      });
+      return obj;
+    }
+  });
+}
+</script>
+</body>
+</html>

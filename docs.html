@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rebeldevx — راهنما و مستندات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg-1:#071018;
+  --bg-2:#041018;
+  --primary:#6CD0B3;
+  --accent:#FF6B6B;
+  --text:#EDF2F7;
+  --muted:#9AA8B0;
+  --glass-bg: rgba(8,12,16,0.45);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-blur: 25px;
+  --radius:16px;
+  --shadow: 0 25px 60px rgba(0,0,0,0.65);
+  --max-width:1400px;
+  --transition: .35s cubic-bezier(.2,.9,.2,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;padding:0;background:
+  radial-gradient(circle at 10% 10%, var(--bg-1) 0%, var(--bg-2) 30%, #01060b 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(var(--glass-blur));z-index:-1;pointer-events:none}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 1.5rem}
+.glass{
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+/* NAV */
+.navbar{position:fixed;left:0;right:0;top:16px;padding:.5rem;z-index:1200;display:flex;justify-content:center}
+.nav-inner{width:100%;max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.5rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{
+  width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary), #9DE6CD);display:flex;align-items:center;justify-content:center;color:#031617;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,0.5)
+}
+.site-title{font-weight:800;font-size:1.2rem;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:.8rem;align-items:center}
+.nav-links a{padding:.6rem 1rem;border-radius:12px;color:var(--text);text-decoration:none;display:inline-flex;gap:.6rem;align-items:center;transition:all var(--transition)}
+.nav-links a:hover{background:rgba(255,255,255,0.05);transform:translateY(-2px)}
+.mobile-toggle{display:none;background:transparent;border:0;color:var(--text);font-size:1.25rem;cursor:pointer;padding:.5rem}
+
+/* Language */
+.lang-group{display:flex;gap:.5rem;align-items:center}
+.lang-btn{padding:.4rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);font-weight:600;transition:all var(--transition);cursor:pointer}
+.lang-btn.active{background:var(--primary);color:#021217;border-color:transparent}
+.lang-btn:hover{background:rgba(255,255,255,0.05)}
+
+/* HERO */
+.hero{padding:8rem 0 3rem;text-align:center}
+.hero .container{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.hero h1{font-size:3rem;margin:0;font-weight:800;background:linear-gradient(135deg, var(--text), var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);max-width:900px;font-size:1.1rem;line-height:1.6}
+.cta{display:flex;gap:1rem;margin-top:1.5rem;justify-content:center}
+.btn{padding:.9rem 1.8rem;border-radius:14px;font-weight:700;display:inline-flex;gap:.8rem;align-items:center;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none;font-family:inherit;font-size:1rem}
+.btn.primary{background:var(--primary);color:#021217;box-shadow:0 8px 30px rgba(108,208,179,0.3)}
+.btn.ghost{border:1px solid rgba(255,255,255,0.08);color:var(--text);background:rgba(255,255,255,0.03)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,0.4)}
+.btn:active{transform:translateY(-1px)}
+
+/* CONTENT SECTIONS */
+.section{padding:3rem 0}
+.title-center{text-align:center;margin-bottom:2rem;font-size:1.8rem;font-weight:700}
+
+/* Documentation Grid */
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem}
+.doc-card{padding:2rem;border-radius:16px;transition:all var(--transition)}
+.doc-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.doc-icon{font-size:3rem;color:var(--primary);margin-bottom:1.5rem;display:block}
+.doc-card h3{font-size:1.4rem;margin-bottom:1rem;color:var(--text)}
+.doc-card p{color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+.doc-features{list-style:none;padding:0;margin:1.5rem 0}
+.doc-features li{padding:.5rem 0;color:var(--muted);display:flex;align-items:center;gap:.8rem}
+.doc-features li:before{content:"✓";color:var(--primary);font-weight:bold}
+
+/* FAQ Section */
+.faq-container{max-width:800px;margin:0 auto}
+.faq-item{margin-bottom:1.5rem;border-radius:12px;overflow:hidden}
+.faq-question{padding:1.5rem;background:var(--glass-bg);border:1px solid var(--glass-border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all var(--transition)}
+.faq-question:hover{background:rgba(255,255,255,0.05)}
+.faq-question h3{margin:0;font-size:1.1rem}
+.faq-icon{transition:transform var(--transition)}
+.faq-answer{padding:0 1.5rem;max-height:0;overflow:hidden;transition:all var(--transition);background:rgba(255,255,255,0.02)}
+.faq-item.active .faq-answer{padding:1.5rem;max-height:500px}
+.faq-item.active .faq-icon{transform:rotate(180deg)}
+
+/* Tutorial Steps */
+.tutorial-steps{display:flex;flex-direction:column;gap:2rem;max-width:900px;margin:0 auto}
+.step{display:flex;gap:2rem;align-items:flex-start}
+.step-number{width:50px;height:50px;border-radius:50%;background:var(--primary);color:#021217;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0}
+.step-content{flex:1}
+.step-content h3{margin:0 0 1rem 0;color:var(--text)}
+.step-content p{color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.code-block{background:rgba(0,0,0,0.3);padding:1.5rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);margin:1rem 0;font-family:monospace;font-size:0.9rem;overflow-x:auto}
+
+/* Protocol Cards */
+.protocols-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.protocol-card{padding:2rem;border-radius:16px;text-align:center;transition:all var(--transition)}
+.protocol-card:hover{transform:translateY(-5px)}
+.protocol-icon{font-size:2.5rem;color:var(--primary);margin-bottom:1rem;display:block}
+.protocol-card h3{font-size:1.3rem;margin-bottom:1rem;color:var(--text)}
+.protocol-card p{color:var(--muted);line-height:1.6}
+
+/* Tabs */
+.tabs{display:flex;gap:1rem;margin-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:1rem}
+.tab-btn{padding:1rem 2rem;background:transparent;border:none;color:var(--muted);cursor:pointer;border-radius:8px;transition:all var(--transition);font-weight:600}
+.tab-btn.active{background:var(--primary);color:#021217}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,0.05)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* FOOTER */
+.footer{background:var(--glass-bg);border-top:1px solid var(--glass-border);padding:3rem 0 2rem;margin-top:4rem}
+.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;align-items:start}
+.footer-brand{display:flex;flex-direction:column;gap:1rem}
+.footer-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.footer-logo-text{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg, var(--primary), #9DE6CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-desc{color:var(--muted);line-height:1.6;max-width:400px}
+.footer-links{display:flex;flex-direction:column;gap:.8rem}
+.footer-links h4{font-size:1.1rem;margin-bottom:1rem;color:var(--text)}
+.footer-links a{color:var(--muted);text-decoration:none;transition:all var(--transition);display:flex;align-items:center;gap:.5rem}
+.footer-links a:hover{color:var(--primary);transform:translateX(5px)}
+.social-links{display:flex;gap:1rem;margin-top:1rem}
+.social-links a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.05);color:var(--text);text-decoration:none;transition:all var(--transition)}
+.social-links a:hover{background:var(--primary);color:#021217;transform:translateY(-3px)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);margin-top:3rem;padding-top:2rem;text-align:center;color:var(--muted)}
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 16, 24, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 1100;
+  padding: 2rem;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.mobile-menu-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu-links a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-5px);
+}
+
+.mobile-lang-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-lang-group .lang-btn {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width:1200px){
+  .footer-content{grid-template-columns:1fr 1fr;gap:2rem}
+  .docs-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:900px){
+  .nav-links{display:none}
+  .mobile-toggle{display:block}
+  .lang-group{display:none}
+  .footer-content{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .nav-inner{padding:.8rem 1rem}
+  .container{padding:0 1.5rem}
+  .step{flex-direction:column;text-align:center;gap:1rem}
+  .step-number{margin:0 auto}
+  .tabs{flex-direction:column}
+}
+
+@media (max-width:768px){
+  .hero{padding:6rem 0 2rem}
+  .hero h1{font-size:1.8rem}
+  .cta{flex-direction:column;width:100%}
+  .btn{width:100%;justify-content:center}
+  .footer-content{gap:2rem}
+  .footer{padding:2rem 0}
+  .hero .glass{padding:2rem 1.5rem !important}
+  .protocols-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:480px){
+  .hero h1{font-size:1.6rem}
+  .container{padding:0 1rem}
+  .hero .glass{padding:2rem 1rem !important}
+  .mobile-menu{padding:1.5rem}
+  .mobile-menu-links a{font-size:1.1rem;padding:.8rem}
+  .doc-card{padding:1.5rem}
+  .faq-question{padding:1rem}
+}
+</style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner glass container" role="navigation" aria-label="Main">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">RD</div>
+        <div class="site-title" data-translate="site_title">Rebeldevx</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="nav-links" role="menubar" id="mainNav">
+          <a href="index.html" role="menuitem"><i class="fas fa-home"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+          <a href="docs.html" role="menuitem"><i class="fas fa-book"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html" role="menuitem"><i class="fas fa-heart"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+
+        <div class="lang-group" role="group" aria-label="Language">
+          <button class="lang-btn active" data-lang="fa">FA</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+        </div>
+
+        <button class="mobile-toggle" id="mobileToggle" aria-label="منو" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="brand">
+        <div class="logo">RD</div>
+        <div class="site-title" data-translate="site_title">Rebeldevx</div>
+      </div>
+      <button class="mobile-toggle" id="mobileClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-menu-links">
+      <a href="index.html"><i class="fas fa-home"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+      <a href="docs.html"><i class="fas fa-book"></i> <span data-translate="nav_docs">مستندات</span></a>
+      <a href="donation.html"><i class="fas fa-heart"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+    </div>
+
+    <div class="mobile-lang-group" role="group" aria-label="Language Mobile">
+      <button class="lang-btn active" data-lang="fa">فارسی</button>
+      <button class="lang-btn" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ru">Русский</button>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="container">
+      <div class="glass" style="padding:3rem 2rem;max-width:1000px;margin:0 auto;border-radius:20px">
+        <h1 data-translate="docs_hero_title">مستندات و راهنمای جامع</h1>
+        <p data-translate="docs_hero_sub">راهنمای کامل استفاده از کانفیگ‌های VPN، آموزش نصب و راه‌اندازی، و پاسخ به سوالات متداول</p>
+        <div class="cta">
+          <a class="btn primary" href="#docs"><i class="fas fa-book-open"></i> <span data-translate="docs_start_reading">شروع مطالعه</span></a>
+          <a class="btn ghost" href="index.html"><i class="fas fa-arrow-right"></i> <span data-translate="back_to_home">بازگشت به صفحه اصلی</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- DOCUMENTATION GRID -->
+  <section id="docs" class="section">
+    <div class="container">
+      <div class="title-center" data-translate="educational_resources">منابع آموزشی</div>
+      <div class="docs-grid">
+        
+        <div class="doc-card glass">
+          <i class="fas fa-file-alt doc-icon"></i>
+          <h3 data-translate="tech_docs">مستندات فنی</h3>
+          <p data-translate="tech_docs_desc">مستندات کامل پروتکل‌ های VPN و روش‌ های پیکربندی</p>
+          <ul class="doc-features">
+            <li data-translate="feature_protocols">آشنایی با پروتکل‌ های مختلف</li>
+            <li data-translate="feature_performance">مقایسه عملکرد و امنیت</li>
+            <li data-translate="feature_advanced">تنظیمات پیشرفته</li>
+            <li data-translate="feature_troubleshooting">عیب‌ یابی مشکلات</li>
+          </ul>
+          <a href="#technical-docs" class="btn ghost" style="width:100%"><span data-translate="view_docs">مشاهده مستندات</span></a>
+        </div>
+
+        <div class="doc-card glass">
+          <i class="fas fa-graduation-cap doc-icon"></i>
+          <h3 data-translate="step_by_step">آموزش‌های گام به گام</h3>
+          <p data-translate="tutorials_desc">آموزش تصویری و متنی نصب و راه‌اندازی</p>
+          <ul class="doc-features">
+            <li data-translate="tutorial_windows">نصب روی ویندوز</li>
+            <li data-translate="tutorial_android">نصب روی اندروید</li>
+            <li data-translate="tutorial_ios">نصب روی iOS</li>
+            <li data-translate="tutorial_linux">نصب روی لینوکس</li>
+          </ul>
+          <a href="#tutorials" class="btn ghost" style="width:100%"><span data-translate="start_tutorial">شروع آموزش</span></a>
+        </div>
+
+        <div class="doc-card glass">
+          <i class="fas fa-question-circle doc-icon"></i>
+          <h3 data-translate="faq_title">سوالات متداول</h3>
+          <p data-translate="faq_desc">پاسخ به پرتکرارترین سوالات کاربران</p>
+          <ul class="doc-features">
+            <li data-translate="faq_connection">مشکلات اتصال</li>
+            <li data-translate="faq_speed">بهبود سرعت</li>
+            <li data-translate="faq_security">تنظیمات امنیتی</li>
+            <li data-translate="faq_support">پشتیبانی فنی</li>
+          </ul>
+          <a href="#faq" class="btn ghost" style="width:100%"><span data-translate="view_faq">مشاهده سوالات</span></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL DOCUMENTATION -->
+  <section id="technical-docs" class="section">
+    <div class="container">
+      <div class="title-center" data-translate="protocol_docs">مستندات فنی پروتکل‌ ها</div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="vless" data-translate="tab_vless">VLESS</button>
+        <button class="tab-btn" data-tab="vmess" data-translate="tab_vmess">VMESS</button>
+        <button class="tab-btn" data-tab="shadowsocks" data-translate="tab_shadowsocks">Shadowsocks</button>
+        <button class="tab-btn" data-tab="trojan" data-translate="tab_trojan">trojan</button>
+      </div>
+
+      <div class="tab-content active" id="vless-tab">
+        <div class="protocols-grid">
+          <div class="protocol-card glass">
+            <i class="fas fa-shield-alt protocol-icon"></i>
+            <h3 data-translate="vless_title">VLESS</h3>
+            <p data-translate="vless_desc">پروتکل سبک‌ وزن و امن برای ارتباطات VPN</p>
+            <div class="doc-features">
+              <li data-translate="vless_feature1">بدون نیاز به UUID اضافی</li>
+              <li data-translate="vless_feature2">پشتیبانی از TLS</li>
+              <li data-translate="vless_feature3">کارایی بالا</li>
+              <li data-translate="vless_feature4">امنیت پیشرفته</li>
+            </div>
+          </div>
+          
+          <div class="code-block">
+            <p>// <span data-translate="sample_config">نمونه کانفیگ</span> VLESS</p>
+            <p>vless://uuid@server.com:443?security=tls&encryption=none&type=ws&path=/vless#Server-Name</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="vmess-tab">
+        <div class="protocols-grid">
+          <div class="protocol-card glass">
+            <i class="fas fa-bolt protocol-icon"></i>
+            <h3 data-translate="vmess_title">VMESS</h3>
+            <p data-translate="vmess_desc">پروتکل قدرتمند با قابلیت‌ های پیشرفته</p>
+            <div class="doc-features">
+              <li data-translate="vmess_feature1">رمزنگاری پیشرفته</li>
+              <li data-translate="vmess_feature2">پشتیبانی از TCP/WebSocket</li>
+              <li data-translate="vmess_feature3">مقاوم در برابر تشخیص</li>
+              <li data-translate="vmess_feature4">سرعت بالا</li>
+            </div>
+          </div>
+          
+          <div class="code-block">
+            <p>// <span data-translate="sample_config">نمونه کانفیگ</span> VMESS</p>
+            <p>vmess://base64-encoded-config</p>
+            <p>{"v":"2","ps":"Server","add":"server.com","port":"443","id":"uuid","aid":"0","scy":"auto","net":"ws","type":"none","host":"","path":"/vmess","tls":"tls"}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TUTORIALS SECTION -->
+  <section id="tutorials" class="section">
+    <div class="container">
+      <div class="title-center" data-translate="installation_guide">آموزش گام به گام نصب</div>
+      
+      <div class="tutorial-steps">
+        
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content glass" style="padding:2rem">
+            <h3 data-translate="step1_title">دانلود کلاینت مناسب</h3>
+            <p data-translate="step1_desc">بر اساس دستگاه و سیستم عامل خود، یکی از کلاینت‌ های زیر را دانلود کنید:</p>
+            <ul class="doc-features">
+              <li><strong data-translate="windows">Windows:</strong> <span data-translate="clients_windows">V2RayN, Nekoray</span></li>
+              <li><strong data-translate="android">Android:</strong> <span data-translate="clients_android">V2RayNG, Nekobox</span></li>
+              <li><strong data-translate="ios">iOS:</strong> <span data-translate="clients_ios">Shadowrocket, Stash</span></li>
+              <li><strong data-translate="macos">macOS:</strong> <span data-translate="clients_macos">V2RayX, ClashX</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content glass" style="padding:2rem">
+            <h3 data-translate="step2_title">وارد کردن کانفیگ</h3>
+            <p data-translate="step2_desc">کانفیگ مورد نظر خود را از صفحه اصلی کپی کرده و در برنامه وارد کنید:</p>
+            <div class="code-block">
+              <p>// <span data-translate="import_method">روش وارد کردن کانفیگ</span>:</p>
+              <p data-translate="import_step1">1. باز کردن برنامه کلاینت</p>
+              <p data-translate="import_step2">2. انتخاب گزینه Import/Import from Clipboard</p>
+              <p data-translate="import_step3">3. پیست کردن لینک کانفیگ</p>
+              <p data-translate="import_step4">4. ذخیره و اتصال</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content glass" style="padding:2rem">
+            <h3 data-translate="step3_title">اتصال و تست</h3>
+            <p data-translate="step3_desc">پس از وارد کردن کانفیگ، اتصال را تست کنید:</p>
+            <ul class="doc-features">
+              <li data-translate="connect_step1">روی سرور انتخاب شده کلیک کنید</li>
+              <li data-translate="connect_step2">گزینه Connect را بزنید</li>
+              <li data-translate="connect_step3">صبر کنید تا وضعیت به "Connected" تغییر کند</li>
+              <li data-translate="connect_step4">سرعت و پینگ را تست کنید</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="title-center" data-translate="faq_title">سوالات متداول</div>
+      
+      <div class="faq-container">
+        
+        <div class="faq-item glass">
+          <div class="faq-question">
+            <h3 data-translate="faq1_question">چرا پس از اتصال، اینترنت کار نمی‌ کند؟</h3>
+            <i class="fas fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p data-translate="faq1_intro">ممکن است به دلایل زیر باشد:</p>
+            <ul class="doc-features">
+              <li data-translate="faq1_reason1">کانفیگ منقضی شده است (Refresh کنید)</li>
+              <li data-translate="faq1_reason2">کلاینت به درستی تنظیم نشده</li>
+              <li data-translate="faq1_reason3">مشکل از DNS دستگاه</li>
+              <li data-translate="faq1_reason4">سرور در دسترس نیست</li>
+            </ul>
+            <p data-translate="faq1_conclusion">لطفا از آپدیت بودن کانفیگ و صحت تنظیمات کلاینت اطمینان حاصل کنید.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <div class="faq-question">
+            <h3 data-translate="faq2_question">چگونه سرعت اتصال را افزایش دهم؟</h3>
+            <i class="fas fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p data-translate="faq2_intro">برای بهبود سرعت:</p>
+            <ul class="doc-features">
+              <li data-translate="faq2_tip1">سرورهای نزدیک به موقعیت جغرافیایی خود انتخاب کنید</li>
+              <li data-translate="faq2_tip2">از پروتکل‌های سبک مانند VLESS استفاده کنید</li>
+              <li data-translate="faq2_tip3">DNS مناسب تنظیم کنید (مثل Cloudflare: 1.1.1.1)</li>
+              <li data-translate="faq2_tip4">برنامه‌های Background را ببندید</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <div class="faq-question">
+            <h3 data-translate="faq3_question">هر چند وقت یکبار کانفیگ‌ ها آپدیت می‌ شوند؟</h3>
+            <i class="fas fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p data-translate="faq3_answer">کانفیگ‌ ها به صورت خودکار هر 1 ساعت آپدیت می‌ شوند. همچنین می‌ توانید به صورت دستی با دکمه Refresh کانفیگ ‌های جدید دریافت کنید.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass">
+          <div class="faq-question">
+            <h3 data-translate="faq4_question">آیا استفاده از این سرویس رایگان است؟</h3>
+            <i class="fas fa-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <p data-translate="faq4_answer">بله، تمامی کانفیگ‌ ها و سرویس‌ های ارائه شده در Rebeldevx کاملا رایگان هستند. ما از منابع عمومی GitHub برای ارائه کانفیگ‌ ها استفاده می‌ کنیم.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="title-center" data-translate="tech_support">پشتیبانی فنی</div>
+      <div class="docs-grid">
+        
+        <div class="doc-card glass">
+          <i class="fas fa-comments doc-icon"></i>
+          <h3 data-translate="report_issue">گزارش مشکل</h3>
+          <p data-translate="report_issue_desc">اگر با مشکلی مواجه شدید، از طریق راه‌های زیر گزارش دهید</p>
+          <ul class="doc-features">
+            <li data-translate="support_telegram">کانال تلگرام: @Rebeldevx</li>
+            <li data-translate="support_github">گیت‌هاب: GitHub Issues</li>
+            <li data-translate="support_email">ایمیل: support@rebeldevx.com</li>
+          </ul>
+          <a href="https://t.me/Rebeldevx" class="btn ghost" style="width:100%" target="_blank" data-translate="contact_telegram">ارتباط در تلگرام</a>
+        </div>
+
+        <div class="doc-card glass">
+          <i class="fas fa-tools doc-icon"></i>
+          <h3 data-translate="helpful_tools">ابزارهای کمکی</h3>
+          <p data-translate="tools_desc">ابزارهای مفید برای تست و عیب‌ یابی</p>
+          <ul class="doc-features">
+            <li data-translate="tool_speed">تست سرعت آنلاین</li>
+            <li data-translate="tool_ping">چک کردن پینگ</li>
+            <li data-translate="tool_status">بررسی وضعیت سرور</li>
+            <li data-translate="tool_analyze">آنالیز کانفیگ</li>
+          </ul>
+          <a href="#tools" class="btn ghost" style="width:100%" data-translate="access_tools">دسترسی به ابزارها</a>
+        </div>
+
+        <div class="doc-card glass">
+          <i class="fas fa-rocket doc-icon"></i>
+          <h3 data-translate="updates">بروزرسانی‌ ها</h3>
+          <p data-translate="updates_desc">از آخرین تغییرات و بروزرسانی‌ ها مطلع شوید</p>
+          <ul class="doc-features">
+            <li data-translate="update_protocols">اضافه شدن پروتکل‌ های جدید</li>
+            <li data-translate="update_performance">بهبود عملکرد</li>
+            <li data-translate="update_bugs">رفع باگ‌ ها</li>
+            <li data-translate="update_features">ویژگی‌ های تازه</li>
+          </ul>
+          <a href="#updates" class="btn ghost" style="width:100%" data-translate="view_changes">مشاهده تغییرات</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo" style="width:50px;height:50px">RD</div>
+            <div class="footer-logo-text" data-translate="site_title">Rebeldevx</div>
+          </div>
+          <p class="footer-desc" data-translate="footer_desc">
+            پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.
+          </p>
+          <div class="social-links">
+            <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener" aria-label="Telegram">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://github.com/Arianlavi" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="quick_links">لینک‌های سریع</h4>
+          <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_home">صفحه اصلی</span></a>
+          <a href="docs.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_docs">مستندات</span></a>
+          <a href="donation.html"><i class="fas fa-arrow-left"></i> <span data-translate="nav_donate">حمایت مالی</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="resources">منابع</h4>
+          <a href="#protocols"><i class="fas fa-arrow-left"></i> <span data-translate="protocols">پروتکل‌ ها</span></a>
+          <a href="#clients"><i class="fas fa-arrow-left"></i> <span data-translate="clients">کلاینت‌ ها</span></a>
+          <a href="#tools"><i class="fas fa-arrow-left"></i> <span data-translate="tools">ابزارها</span></a>
+          <a href="#updates"><i class="fas fa-arrow-left"></i> <span data-translate="updates">بروزرسانی‌ ها</span></a>
+        </div>
+        
+        <div class="footer-links">
+          <h4 data-translate="support">پشتیبانی</h4>
+          <a href="https://t.me/Rebeldevx" target="_blank" rel="noopener"><i class="fas fa-arrow-left"></i> <span data-translate="telegram">تلگرام</span></a>
+          <a href="#report"><i class="fas fa-arrow-left"></i> <span data-translate="report_issue">گزارش مشکل</span></a>
+          <a href="https://t.me/Rebeldevx"><i class="fas fa-arrow-left"></i> <span data-translate="contact_us">تماس با ما</span></a>
+          <a href="donation.html"><i class="fas fa-arrow-left"></i> <span data-translate="donate">حمایت</span></a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Rebeldevx. <span data-translate="all_rights_reserved">تمام حقوق محفوظ است</span></p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+
+const TRANSLATIONS = {
+  fa: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "صفحه اصلی",
+    nav_docs: "مستندات",
+    nav_donate: "حمایت مالی",
+    
+    // Hero Section
+    docs_hero_title: "مستندات و راهنمای جامع",
+    docs_hero_sub: "راهنمای کامل استفاده از کانفیگ‌ های VPN، آموزش نصب و راه‌اندازی، و پاسخ به سوالات متداول",
+    docs_start_reading: "شروع مطالعه",
+    back_to_home: "بازگشت به صفحه اصلی",
+    
+    // Documentation Grid
+    educational_resources: "منابع آموزشی",
+    tech_docs: "مستندات فنی",
+    tech_docs_desc: "مستندات کامل پروتکل‌های VPN و روش‌ های پیکربندی",
+    step_by_step: "آموزش‌ های گام به گام",
+    tutorials_desc: "آموزش تصویری و متنی نصب و راه‌اندازی",
+    faq_title: "سوالات متداول",
+    faq_desc: "پاسخ به پرتکرارترین سوالات کاربران",
+    
+    // Features
+    feature_protocols: "آشنایی با پروتکل‌ های مختلف",
+    feature_performance: "مقایسه عملکرد و امنیت",
+    feature_advanced: "تنظیمات پیشرفته",
+    feature_troubleshooting: "عیب‌ یابی مشکلات",
+    tutorial_windows: "نصب روی ویندوز",
+    tutorial_android: "نصب روی اندروید",
+    tutorial_ios: "نصب روی iOS",
+    tutorial_linux: "نصب روی لینوکس",
+    faq_connection: "مشکلات اتصال",
+    faq_speed: "بهبود سرعت",
+    faq_security: "تنظیمات امنیتی",
+    faq_support: "پشتیبانی فنی",
+    
+    // Buttons
+    view_docs: "مشاهده مستندات",
+    start_tutorial: "شروع آموزش",
+    view_faq: "مشاهده سوالات",
+    
+    // Protocol Documentation
+    protocol_docs: "مستندات فنی پروتکل‌ها",
+    tab_vless: "VLESS",
+    tab_vmess: "VMESS",
+    tab_shadowsocks: "Shadowsocks",
+    tab_trojan: "trojan",
+    
+    // VLESS
+    vless_title: "VLESS",
+    vless_desc: "پروتکل سبک‌ وزن و امن برای ارتباطات VPN",
+    vless_feature1: "بدون نیاز به UUID اضافی",
+    vless_feature2: "پشتیبانی از TLS",
+    vless_feature3: "کارایی بالا",
+    vless_feature4: "امنیت پیشرفته",
+    
+    // VMESS
+    vmess_title: "VMESS",
+    vmess_desc: "پروتکل قدرتمند با قابلیت‌ های پیشرفته",
+    vmess_feature1: "رمزنگاری پیشرفته",
+    vmess_feature2: "پشتیبانی از TCP/WebSocket",
+    vmess_feature3: "مقاوم در برابر تشخیص",
+    vmess_feature4: "سرعت بالا",
+    
+    // Tutorials
+    installation_guide: "آموزش گام به گام نصب",
+    step1_title: "دانلود کلاینت مناسب",
+    step1_desc: "بر اساس دستگاه و سیستم عامل خود، یکی از کلاینت‌ های زیر را دانلود کنید:",
+    step2_title: "وارد کردن کانفیگ",
+    step2_desc: "کانفیگ مورد نظر خود را از صفحه اصلی کپی کرده و در برنامه وارد کنید:",
+    step3_title: "اتصال و تست",
+    step3_desc: "پس از وارد کردن کانفیگ، اتصال را تست کنید:",
+    
+    // Clients
+    windows: "Windows:",
+    android: "Android:",
+    ios: "iOS:",
+    macos: "macOS:",
+    clients_windows: "V2RayN, Nekoray",
+    clients_android: "V2RayNG, Nekobox",
+    clients_ios: "Shadowrocket, Stash",
+    clients_macos: "V2RayX, ClashX",
+    
+    // Import Steps
+    sample_config: "نمونه کانفیگ",
+    import_method: "روش وارد کردن کانفیگ",
+    import_step1: "1. باز کردن برنامه کلاینت",
+    import_step2: "2. انتخاب گزینه Import/Import from Clipboard",
+    import_step3: "3. پیست کردن لینک کانفیگ",
+    import_step4: "4. ذخیره و اتصال",
+    
+    // Connection Steps
+    connect_step1: "روی سرور انتخاب شده کلیک کنید",
+    connect_step2: "گزینه Connect را بزنید",
+    connect_step3: "صبر کنید تا وضعیت به \"Connected\" تغییر کند",
+    connect_step4: "سرعت و پینگ را تست کنید",
+    
+    // FAQ
+    faq1_question: "چرا پس از اتصال، اینترنت کار نمی‌کند؟",
+    faq1_intro: "ممکن است به دلایل زیر باشد:",
+    faq1_reason1: "کانفیگ منقضی شده است (Refresh کنید)",
+    faq1_reason2: "کلاینت به درستی تنظیم نشده",
+    faq1_reason3: "مشکل از DNS دستگاه",
+    faq1_reason4: "سرور در دسترس نیست",
+    faq1_conclusion: "لطفا از آپدیت بودن کانفیگ و صحت تنظیمات کلاینت اطمینان حاصل کنید.",
+    
+    faq2_question: "چگونه سرعت اتصال را افزایش دهم؟",
+    faq2_intro: "برای بهبود سرعت:",
+    faq2_tip1: "سرورهای نزدیک به موقعیت جغرافیایی خود انتخاب کنید",
+    faq2_tip2: "از پروتکل‌ های سبک مانند VLESS استفاده کنید",
+    faq2_tip3: "DNS مناسب تنظیم کنید (مثل Cloudflare: 1.1.1.1)",
+    faq2_tip4: "برنامه‌های Background را ببندید",
+    
+    faq3_question: "هر چند وقت یکبار کانفیگ ‌ها آپدیت می‌ شوند؟",
+    faq3_answer: "کانفیگ‌ ها به صورت خودکار هر 1 ساعت آپدیت می‌شوند. همچنین می‌توانید به صورت دستی با دکمه Refresh کانفیگ‌ های جدید دریافت کنید.",
+    
+    faq4_question: "آیا استفاده از این سرویس رایگان است؟",
+    faq4_answer: "بله، تمامی کانفیگ‌ ها و سرویس‌ های ارائه شده در Rebeldevx کاملا رایگان هستند. ما از منابع عمومی GitHub برای ارائه کانفیگ‌ ها استفاده می‌ کنیم.",
+    
+    // Support Section
+    tech_support: "پشتیبانی فنی",
+    report_issue: "گزارش مشکل",
+    report_issue_desc: "اگر با مشکلی مواجه شدید، از طریق راه‌های زیر گزارش دهید",
+    helpful_tools: "ابزارهای کمکی",
+    tools_desc: "ابزارهای مفید برای تست و عیب‌یابی",
+    updates: "بروزرسانی‌ ها",
+    updates_desc: "از آخرین تغییرات و بروزرسانی‌ ها مطلع شوید",
+    
+    // Support Details
+    support_telegram: "کانال تلگرام: @Rebeldevx",
+    support_github: "گیت‌هاب: GitHub Issues",
+    support_email: "ایمیل: support@rebeldevx.com",
+    contact_telegram: "ارتباط در تلگرام",
+    
+    // Tools
+    tool_speed: "تست سرعت آنلاین",
+    tool_ping: "چک کردن پینگ",
+    tool_status: "بررسی وضعیت سرور",
+    tool_analyze: "آنالیز کانفیگ",
+    access_tools: "دسترسی به ابزارها",
+    
+    // Updates
+    update_protocols: "اضافه شدن پروتکل‌ های جدید",
+    update_performance: "بهبود عملکرد",
+    update_bugs: "رفع باگ‌ ها",
+    update_features: "ویژگی‌ های تازه",
+    view_changes: "مشاهده تغییرات",
+    
+    // Footer
+    footer_desc: "پلتفرم پیشرو در تهیه و ارائه کانفیگ‌ های VPN با لینک‌ های مستقیم از منابع معتبر.",
+    quick_links: "لینک‌های سریع",
+    protocols: "پروتکل‌ ها",
+    clients: "کلاینت‌ ها",
+    tools: "ابزارها",
+    contact_us: "تماس با ما",
+    donate: "حمایت",
+    all_rights_reserved: "تمام حقوق محفوظ است"
+  },
+  
+  en: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "Home",
+    nav_docs: "Documentation",
+    nav_donate: "Donate",
+    
+    // Hero Section
+    docs_hero_title: "Comprehensive Documentation & Guides",
+    docs_hero_sub: "Complete guide for using VPN configs, installation setup, and answers to frequently asked questions",
+    docs_start_reading: "Start Reading",
+    back_to_home: "Back to Home",
+    
+    // Documentation Grid
+    educational_resources: "Educational Resources",
+    tech_docs: "Technical Documentation",
+    tech_docs_desc: "Complete documentation of VPN protocols and configuration methods",
+    step_by_step: "Step-by-Step Tutorials",
+    tutorials_desc: "Visual and text tutorials for installation and setup",
+    faq_title: "Frequently Asked Questions",
+    faq_desc: "Answers to the most common user questions",
+    
+    // Features
+    feature_protocols: "Introduction to different protocols",
+    feature_performance: "Performance and security comparison",
+    feature_advanced: "Advanced settings",
+    feature_troubleshooting: "Troubleshooting issues",
+    tutorial_windows: "Installation on Windows",
+    tutorial_android: "Installation on Android",
+    tutorial_ios: "Installation on iOS",
+    tutorial_linux: "Installation on Linux",
+    faq_connection: "Connection issues",
+    faq_speed: "Speed improvement",
+    faq_security: "Security settings",
+    faq_support: "Technical support",
+    
+    // Buttons
+    view_docs: "View Documentation",
+    start_tutorial: "Start Tutorial",
+    view_faq: "View FAQ",
+    
+    // Protocol Documentation
+    protocol_docs: "Technical Protocol Documentation",
+    tab_vless: "VLESS",
+    tab_vmess: "VMESS",
+    tab_shadowsocks: "Shadowsocks",
+    tab_trojan: "trojan",
+    
+    // VLESS
+    vless_title: "VLESS",
+    vless_desc: "Lightweight and secure protocol for VPN communications",
+    vless_feature1: "No additional UUID required",
+    vless_feature2: "TLS support",
+    vless_feature3: "High performance",
+    vless_feature4: "Advanced security",
+    
+    // VMESS
+    vmess_title: "VMESS",
+    vmess_desc: "Powerful protocol with advanced capabilities",
+    vmess_feature1: "Advanced encryption",
+    vmess_feature2: "TCP/WebSocket support",
+    vmess_feature3: "Detection resistant",
+    vmess_feature4: "High speed",
+    
+    // Tutorials
+    installation_guide: "Step-by-Step Installation Guide",
+    step1_title: "Download Suitable Client",
+    step1_desc: "Based on your device and operating system, download one of the following clients:",
+    step2_title: "Import Configuration",
+    step2_desc: "Copy your desired config from the main page and import it into the application:",
+    step3_title: "Connect and Test",
+    step3_desc: "After importing the config, test the connection:",
+    
+    // Clients
+    windows: "Windows:",
+    android: "Android:",
+    ios: "iOS:",
+    macos: "macOS:",
+    clients_windows: "V2RayN, Nekoray",
+    clients_android: "V2RayNG, Nekobox",
+    clients_ios: "Shadowrocket, Stash",
+    clients_macos: "V2RayX, ClashX",
+    
+    // Import Steps
+    sample_config: "Sample config",
+    import_method: "Import method:",
+    import_step1: "1. Open the client application",
+    import_step2: "2. Select Import/Import from Clipboard option",
+    import_step3: "3. Paste the config link",
+    import_step4: "4. Save and connect",
+    
+    // Connection Steps
+    connect_step1: "Click on the selected server",
+    connect_step2: "Click the Connect button",
+    connect_step3: "Wait for status to change to \"Connected\"",
+    connect_step4: "Test speed and ping",
+    
+    // FAQ
+    faq1_question: "Why doesn't internet work after connection?",
+    faq1_intro: "It could be due to the following reasons:",
+    faq1_reason1: "Config has expired (Refresh it)",
+    faq1_reason2: "Client not configured properly",
+    faq1_reason3: "DNS issue on device",
+    faq1_reason4: "Server not available",
+    faq1_conclusion: "Please ensure the config is updated and client settings are correct.",
+    
+    faq2_question: "How to increase connection speed?",
+    faq2_intro: "To improve speed:",
+    faq2_tip1: "Choose servers close to your geographical location",
+    faq2_tip2: "Use lightweight protocols like VLESS",
+    faq2_tip3: "Set proper DNS (like Cloudflare: 1.1.1.1)",
+    faq2_tip4: "Close background applications",
+    
+    faq3_question: "How often are configs updated?",
+    faq3_answer: "Configs are automatically updated every 1 hour. You can also manually get new configs with the Refresh button.",
+    
+    faq4_question: "Is using this service free?",
+    faq4_answer: "Yes, all configs and services provided by Rebeldevx are completely free. We use public GitHub sources to provide configs.",
+    
+    // Support Section
+    tech_support: "Technical Support",
+    report_issue: "Report Issue",
+    report_issue_desc: "If you encounter any problem, report it through the following methods",
+    helpful_tools: "Helpful Tools",
+    tools_desc: "Useful tools for testing and troubleshooting",
+    updates: "Updates",
+    updates_desc: "Stay informed about latest changes and updates",
+    
+    // Support Details
+    support_telegram: "Telegram channel: @Rebeldevx",
+    support_github: "GitHub: GitHub Issues",
+    support_email: "Email: support@rebeldevx.com",
+    contact_telegram: "Contact on Telegram",
+    
+    // Tools
+    tool_speed: "Online speed test",
+    tool_ping: "Ping check",
+    tool_status: "Server status check",
+    tool_analyze: "Config analysis",
+    access_tools: "Access tools",
+    
+    // Updates
+    update_protocols: "Adding new protocols",
+    update_performance: "Performance improvement",
+    update_bugs: "Bug fixes",
+    update_features: "New features",
+    view_changes: "View changes",
+    
+    // Footer
+    footer_desc: "Leading platform providing VPN configs with direct links from reliable sources.",
+    quick_links: "Quick Links",
+    protocols: "Protocols",
+    clients: "Clients",
+    tools: "Tools",
+    contact_us: "Contact Us",
+    donate: "Donate",
+    all_rights_reserved: "All rights reserved"
+  },
+  
+  ru: {
+    // Navigation
+    site_title: "Rebeldevx",
+    nav_home: "Главная",
+    nav_docs: "Документация",
+    nav_donate: "Поддержать",
+    
+    // Hero Section
+    docs_hero_title: "Комплексная документация и руководства",
+    docs_hero_sub: "Полное руководство по использованию VPN конфигов, установке и ответы на частые вопросы",
+    docs_start_reading: "Начать чтение",
+    back_to_home: "Вернуться на главную",
+    
+    // Documentation Grid
+    educational_resources: "Образовательные ресурсы",
+    tech_docs: "Техническая документация",
+    tech_docs_desc: "Полная документация VPN протоколов и методов конфигурации",
+    step_by_step: "Пошаговые руководства",
+    tutorials_desc: "Визуальные и текстовые руководства по установке и настройке",
+    faq_title: "Часто задаваемые вопросы",
+    faq_desc: "Ответы на самые частые вопросы пользователей",
+    
+    // Features
+    feature_protocols: "Знакомство с различными протоколами",
+    feature_performance: "Сравнение производительности и безопасности",
+    feature_advanced: "Расширенные настройки",
+    feature_troubleshooting: "Решение проблем",
+    tutorial_windows: "Установка на Windows",
+    tutorial_android: "Установка на Android",
+    tutorial_ios: "Установка на iOS",
+    tutorial_linux: "Установка на Linux",
+    faq_connection: "Проблемы с подключением",
+    faq_speed: "Улучшение скорости",
+    faq_security: "Настройки безопасности",
+    faq_support: "Техническая поддержка",
+    
+    // Buttons
+    view_docs: "Смотреть документацию",
+    start_tutorial: "Начать обучение",
+    view_faq: "Смотреть FAQ",
+    
+    // Protocol Documentation
+    protocol_docs: "Техническая документация протоколов",
+    tab_vless: "VLESS",
+    tab_vmess: "VMESS",
+    tab_shadowsocks: "Shadowsocks",
+    tab_trojan: "trojan",
+    
+    // VLESS
+    vless_title: "VLESS",
+    vless_desc: "Легкий и безопасный протокол для VPN соединений",
+    vless_feature1: "Не требует дополнительного UUID",
+    vless_feature2: "Поддержка TLS",
+    vless_feature3: "Высокая производительность",
+    vless_feature4: "Продвинутая безопасность",
+    
+    // VMESS
+    vmess_title: "VMESS",
+    vmess_desc: "Мощный протокол с расширенными возможностями",
+    vmess_feature1: "Продвинутое шифрование",
+    vmess_feature2: "Поддержка TCP/WebSocket",
+    vmess_feature3: "Устойчив к обнаружению",
+    vmess_feature4: "Высокая скорость",
+    
+    // Tutorials
+    installation_guide: "Пошаговое руководство по установке",
+    step1_title: "Скачать подходящий клиент",
+    step1_desc: "В зависимости от вашего устройства и ОС, скачайте один из следующих клиентов:",
+    step2_title: "Импорт конфигурации",
+    step2_desc: "Скопируйте нужный конфиг с главной страницы и импортируйте в приложение:",
+    step3_title: "Подключение и тестирование",
+    step3_desc: "После импорта конфига протестируйте соединение:",
+    
+    // Clients
+    windows: "Windows:",
+    android: "Android:",
+    ios: "iOS:",
+    macos: "macOS:",
+    clients_windows: "V2RayN, Nekoray",
+    clients_android: "V2RayNG, Nekobox",
+    clients_ios: "Shadowrocket, Stash",
+    clients_macos: "V2RayX, ClashX",
+    
+    // Import Steps
+    sample_config: "Пример конфига",
+    import_method: "Метод импорта:",
+    import_step1: "1. Откройте клиентское приложение",
+    import_step2: "2. Выберите Import/Import from Clipboard",
+    import_step3: "3. Вставьте ссылку конфига",
+    import_step4: "4. Сохраните и подключитесь",
+    
+    // Connection Steps
+    connect_step1: "Нажмите на выбранный сервер",
+    connect_step2: "Нажмите кнопку Connect",
+    connect_step3: "Дождитесь смены статуса на \"Connected\"",
+    connect_step4: "Протестируйте скорость и пинг",
+    
+    // FAQ
+    faq1_question: "Почему не работает интернет после подключения?",
+    faq1_intro: "Это может быть по следующим причинам:",
+    faq1_reason1: "Конфиг устарел (Обновите его)",
+    faq1_reason2: "Клиент настроен неправильно",
+    faq1_reason3: "Проблема с DNS на устройстве",
+    faq1_reason4: "Сервер недоступен",
+    faq1_conclusion: "Пожалуйста, убедитесь что конфиг обновлен и настройки клиента правильные.",
+    
+    faq2_question: "Как увеличить скорость соединения?",
+    faq2_intro: "Для улучшения скорости:",
+    faq2_tip1: "Выбирайте серверы близкие к вашему местоположению",
+    faq2_tip2: "Используйте легкие протоколы как VLESS",
+    faq2_tip3: "Настройте правильный DNS (например Cloudflare: 1.1.1.1)",
+    faq2_tip4: "Закройте фоновые приложения",
+    
+    faq3_question: "Как часто обновляются конфиги?",
+    faq3_answer: "Конфиги автоматически обновляются каждый час. Вы также можете вручную получать новые конфиги кнопкой Refresh.",
+    
+    faq4_question: "Бесплатно ли использование этого сервиса?",
+    faq4_answer: "Да, все конфиги и сервисы предоставляемые Rebeldevx полностью бесплатны. Мы используем публичные GitHub источники для предоставления конфигов.",
+    
+    // Support Section
+    tech_support: "Техническая поддержка",
+    report_issue: "Сообщить о проблеме",
+    report_issue_desc: "Если вы столкнулись с проблемой, сообщите через следующие методы",
+    helpful_tools: "Полезные инструменты",
+    tools_desc: "Полезные инструменты для тестирования и решения проблем",
+    updates: "Обновления",
+    updates_desc: "Будьте в курсе последних изменений и обновлений",
+    
+    // Support Details
+    support_telegram: "Телеграм канал: @Rebeldevx",
+    support_github: "Гитхаб: GitHub Issues",
+    support_email: "Email: support@rebeldevx.com",
+    contact_telegram: "Связаться в Телеграме",
+    
+    // Tools
+    tool_speed: "Онлайн тест скорости",
+    tool_ping: "Проверка пинга",
+    tool_status: "Проверка статуса сервера",
+    tool_analyze: "Анализ конфига",
+    access_tools: "Доступ к инструментам",
+    
+    // Updates
+    update_protocols: "Добавление новых протоколов",
+    update_performance: "Улучшение производительности",
+    update_bugs: "Исправление ошибок",
+    update_features: "Новые функции",
+    view_changes: "Посмотреть изменения",
+    
+    // Footer
+    footer_desc: "Ведущая платформа с конфигами VPN и прямыми ссылками из надежных источников.",
+    quick_links: "Быстрые ссылки",
+    protocols: "Протоколы",
+    clients: "Клиенты",
+    tools: "Инструменты",
+    contact_us: "Связаться с нами",
+    donate: "Поддержать",
+    all_rights_reserved: "Все права защищены"
+  }
+};
+
+// سیستم ترجمه
+function applyTranslations(lang = 'fa') {
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) {
+      element.textContent = TRANSLATIONS[lang][key];
+    }
+  });
+  
+  // تغییر direction بر اساس زبان
+  if (lang === 'fa') {
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'fa';
+  } else if (lang === 'en') {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'en';
+  } else if (lang === 'ru') {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'ru';
+  }
+}
+
+// تنظیم event listener برای دکمه‌های زبان
+function setupLanguageSwitchers() {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // حذف active از همه دکمه‌ها
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      
+      // اضافه کردن active به دکمه کلیک شده
+      btn.classList.add('active');
+      
+      // اعمال ترجمه
+      const lang = btn.getAttribute('data-lang');
+      applyTranslations(lang);
+      
+      // ذخیره زبان در localStorage
+      localStorage.setItem('selectedLanguage', lang);
+      
+      // بستن منوی موبایل اگر باز باشد
+      if (window.innerWidth <= 900) {
+        mobileMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+}
+
+// Tab System
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Remove active from all tabs
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    // Add active to clicked tab
+    btn.classList.add('active');
+    const tabId = btn.dataset.tab + '-tab';
+    document.getElementById(tabId).classList.add('active');
+  });
+});
+
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(question => {
+  question.addEventListener('click', () => {
+    const faqItem = question.parentElement;
+    faqItem.classList.toggle('active');
+  });
+});
+
+// Mobile Menu
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileClose = document.getElementById('mobileClose');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (mobileToggle && mobileClose && mobileMenu) {
+  mobileToggle.addEventListener('click', () => {
+    mobileMenu.classList.add('active');
+    mobileToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  });
+
+  mobileClose.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Initialize application
+function initApp() {
+  // بارگیری زبان ذخیره شده یا استفاده از زبان پیش‌فرض
+  const savedLanguage = localStorage.getItem('selectedLanguage') || 'fa';
+  
+  // تنظیم active بر اساس زبان ذخیره شده
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.getAttribute('data-lang') === savedLanguage) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  
+  // اعمال ترجمه
+  applyTranslations(savedLanguage);
+  
+  // تنظیم event listenerهای زبان
+  setupLanguageSwitchers();
+  
+  console.log('Application initialized with language:', savedLanguage);
+}
+
+// شروع اپلیکیشن وقتی DOM آماده است
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>
