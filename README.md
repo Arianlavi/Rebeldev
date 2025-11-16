@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="logo.png" width="180" alt="Rebeldev Logo"/>
+  <img src="logo.png" width="518" alt="Rebeldev Logo"/>
   <br>
   🚀 Rebeldev – Free Auto-Updated VPN Configs
 </h1>
