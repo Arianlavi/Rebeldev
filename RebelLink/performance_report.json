@@ -1,25 +1,25 @@
 {
-  "scan_timestamp": "2025-12-06T01:03:05.604349+00:00",
-  "duration_seconds": 1038.7,
+  "scan_timestamp": "2025-12-06T02:40:45.405033+00:00",
+  "duration_seconds": 1040.48,
   "performance_metrics": {
-    "total_processed": 479,
-    "valid_configs": 277,
+    "total_processed": 478,
+    "valid_configs": 275,
     "duplicates": 0,
-    "failed_tests": 202,
-    "success_rate": 57.83,
-    "avg_latency_ms": 176.73,
-    "avg_score": 98.82
+    "failed_tests": 203,
+    "success_rate": 57.53,
+    "avg_latency_ms": 181.21,
+    "avg_score": 98.79
   },
   "protocol_summary": {
     "vmess": {
       "count": 93,
-      "avg_lat": 276.1720430107527,
-      "avg_score": 98.15885304659497
+      "avg_lat": 291.6989247311828,
+      "avg_score": 98.05534050179212
     },
     "vless": {
       "count": 126,
-      "avg_lat": 82.87301587301587,
-      "avg_score": 99.44751322751323
+      "avg_lat": 84.44444444444444,
+      "avg_score": 99.43703703703703
     },
     "ss": {
       "count": 0,
@@ -27,9 +27,9 @@
       "avg_score": 0.0
     },
     "trojan": {
-      "count": 58,
-      "avg_lat": 221.1551724137931,
-      "avg_score": 98.52563218390804
+      "count": 56,
+      "avg_lat": 215.44642857142858,
+      "avg_score": 98.56369047619047
     }
   }
 }
